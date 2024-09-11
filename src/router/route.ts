@@ -6,10 +6,10 @@ export interface AppRouteRecordRaw {
   name: string;
   component?: Component;
   redirect?: string;
-  meta?: Meta;
+  meta?: RouteMeta;
   children?: AppRouteRecordRaw[];
 }
-export interface Meta {
+export interface RouteMeta {
   title: string;
   permissions: string[];
   // 排序

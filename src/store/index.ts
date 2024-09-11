@@ -5,7 +5,9 @@ import type { App } from 'vue';
 
 export const usePinia = (app: App<Element>) => {
   const pinia = createPinia();
-  const installPersistedStatePlugin = createPersistedStatePlugin();
+  const installPersistedStatePlugin = createPersistedStatePlugin({
+    persist: false // 是否持久化
+  });
   pinia.use(installPersistedStatePlugin);
   app.use(pinia);
 };

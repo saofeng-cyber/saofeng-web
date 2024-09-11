@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import type { FormInst } from 'naive-ui';
-import { login } from '@/api/login';
-import { useAppStore } from '@/store/modules/app';
+import { useUserStore } from '@/store/modules/user';
 
 const router = useRouter();
 
-const appStore = useAppStore();
+const userStore = useUserStore();
 
 const formRef = ref<FormInst | null>(null);
 const formValue = ref({
@@ -28,11 +27,9 @@ const rules = {
 const handleLogin = () => {
   formRef.value?.validate((errors) => {
     if (!errors) {
-      login(formValue.value).then((res) => {
-        const { data } = res;
-        appStore.setToken(data.token);
-        router.push({ path: '/' });
-      });
+      userStore.userLogin(formValue.value).then(() => {
+        router.push('/');
+      })
     } else {
       console.log('验证失败');
     }
@@ -44,28 +41,15 @@ const handleLogin = () => {
     <div class="w-[400px] h-[300px]">
       <n-card bordered>
         <h3 class="mb-4 text-2xl text-center">登录</h3>
-        <n-form
-          ref="formRef"
-          :label-width="80"
-          :model="formValue"
-          :rules="rules"
-        >
+        <n-form ref="formRef" :label-width="80" :model="formValue" :rules="rules">
           <n-form-item label="姓名" path="username">
-            <n-input
-              v-model:value="formValue.username"
-              placeholder="输入姓名"
-            />
+            <n-input v-model:value="formValue.username" placeholder="输入姓名" />
           </n-form-item>
           <n-form-item label="密码" path="password">
-            <n-input
-              v-model:value="formValue.password"
-              placeholder="输入密码"
-            />
+            <n-input v-model:value="formValue.password" placeholder="输入密码" />
           </n-form-item>
           <n-form-item>
-            <n-button type="primary" @click="handleLogin" block circle dashed
-              >登录</n-button
-            >
+            <n-button type="primary" @click="handleLogin" block circle dashed>登录</n-button>
           </n-form-item>
         </n-form>
       </n-card>

@@ -14,7 +14,8 @@ const routes: Array<RouteRecordRaw> = [
       sort: 3,
       isRoot: true,
       activeMenu: 'about_index',
-      icon: renderIcon(ProjectOutlined)
+      icon: renderIcon(ProjectOutlined),
+      roles: ['admin']
     },
     children: [
       {

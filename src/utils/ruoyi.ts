@@ -49,13 +49,6 @@ export function parseTime(time: any, pattern?: string) {
   return timeStr;
 }
 
-// 表单重置
-export function resetForm(refName: string) {
-  if (this.$refs[refName]) {
-    this.$refs[refName].resetFields();
-  }
-}
-
 // 添加日期范围
 export function addDateRange(params: any, dateRange: any[], propName?: string) {
   const search = params;

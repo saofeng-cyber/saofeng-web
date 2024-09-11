@@ -1,14 +1,6 @@
 <template>
-  <n-menu
-    :value="route.name"
-    :collapsed="collapsed"
-    :collapsed-width="64"
-    :indent="24"
-    accordion
-    :collapsed-icon-size="22"
-    :options="menuOptions"
-    @update:value="clickMenuItem"
-  />
+  <n-menu :value="route.name" :collapsed="collapsed" :collapsed-width="64" :indent="24" accordion
+    :collapsed-icon-size="22" :options="menuOptions" @update:value="clickMenuItem" />
 </template>
 
 <script lang="ts" setup>
@@ -44,5 +36,5 @@ const clickMenuItem = (key: string) => {
   }
 };
 
-const menuOptions = createMenu(asyncRouteStore.asyncRoutes);
+const menuOptions = createMenu(asyncRouteStore.asyncRouters);
 </script>

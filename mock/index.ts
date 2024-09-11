@@ -29,10 +29,7 @@ export default [
           code: 200,
           data: {
             token: token,
-            user: {
-              name: 'admin',
-              avatar: 'https://cdn.vuetifyjs.com/images/john.jpg'
-            }
+            expires_in: 60 // token过期时间
           },
           message: '登录成功'
         };
@@ -43,6 +40,25 @@ export default [
           message: '用户名或密码错误'
         };
       }
+    }
+  },
+  {
+    url: '/api/getUserInfo',
+    method: 'get',
+    response: () => {
+      return {
+        code: 200,
+        data: {
+          userInfo: {
+            username: 'admin',
+            avatar: 'https://q1.qlogo.cn/g?b=qq&nk=942391953&s=640',
+            emial: 'admin@163.com'
+          },
+          permissionsList: ['admin'],
+          roles: ['admin']
+        },
+        message: '获取用户信息成功'
+      };
     }
   }
 ] as MockMethod[];

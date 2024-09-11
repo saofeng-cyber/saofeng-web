@@ -16,7 +16,7 @@ export function login(params: { username: string; password: string }) {
 // 获取用户详细信息
 export function getInfo() {
   return service.request({
-    url: '/api/getInfo',
+    url: '/getUserInfo',
     method: 'get'
   });
 }

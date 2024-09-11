@@ -1,6 +1,6 @@
 import type { RouteRecordRaw } from 'vue-router';
 import Layout from '@/layout/index.vue';
-import { WalletOutlined, DragOutlined } from '@vicons/antd';
+import { WalletOutlined } from '@vicons/antd';
 import { renderIcon } from '@/utils/tools';
 
 const routeName = 'comp';
@@ -49,8 +49,7 @@ const routes: Array<RouteRecordRaw> = [
         path: 'drag',
         name: `Drag`,
         meta: {
-          title: '拖拽',
-          icon: renderIcon(DragOutlined)
+          title: '拖拽'
         },
         component: () => import('@/views/components/drag/index.vue')
       }

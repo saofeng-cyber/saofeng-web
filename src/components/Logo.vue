@@ -1,16 +1,19 @@
 <script setup lang="ts">
+import { useUserStore } from '@/store/modules/user';
+const userStore = useUserStore();
 defineProps({
   isCollapsed: {
     type: Boolean,
     default: false
   }
 });
+const avatarUrl = computed(() => userStore.userInfo.avatar);
 </script>
 
 <template>
   <div class="p-4 logo">
     <router-link to="/">
-      <img src="@/assets/logo.jpg" alt="" srcset="" />
+      <img :src="avatarUrl" alt="" srcset="" />
       <h1 v-if="!isCollapsed">Saofeng Admin</h1>
     </router-link>
   </div>

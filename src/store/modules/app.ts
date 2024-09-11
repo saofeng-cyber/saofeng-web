@@ -1,10 +1,16 @@
+interface userInfo {
+  role: string;
+  permissionsList: string[];
+  username: string;
+  password: string;
+  avatar: string;
+}
 export const useAppStore = defineStore(
   'app',
   () => {
     // state
     const sideWidth = ref(200);
     const collapsed = ref(true);
-    const token = ref('');
     // actions
     const setSideWidth = (width: number) => {
       sideWidth.value = width;
@@ -12,16 +18,11 @@ export const useAppStore = defineStore(
     const setCollapsed = (flag: boolean) => {
       collapsed.value = flag;
     };
-    const setToken = (_token: string) => {
-      token.value = _token;
-    };
     return {
       sideWidth,
       setSideWidth,
       collapsed,
-      setCollapsed,
-      token,
-      setToken
+      setCollapsed
     };
   },
   {

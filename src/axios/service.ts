@@ -6,6 +6,7 @@ import type {
   InternalAxiosRequestConfig
 } from './types/index';
 import { REQUEST_TIMEOUT } from './constant';
+import { getToken } from '@/utils/auth';
 export const PATH_URL = import.meta.env.VITE_APP_BASE_API;
 
 const service: AxiosInstance = axios.create({
@@ -16,6 +17,7 @@ const service: AxiosInstance = axios.create({
 service.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   // const controller = new AbortController();
   // res.signal = controller.signal;
+  config.headers['Authorization'] = 'Bearer ' + getToken();
   return config;
 });
 

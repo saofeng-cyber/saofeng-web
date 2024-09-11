@@ -10,7 +10,6 @@ import {
   handleTree,
   modelTree,
   parseTime,
-  resetForm,
   selectDictLabel,
   selectDictLabels
 } from '@/utils/ruoyi';
@@ -22,7 +21,6 @@ declare module 'vue' {
     useDictToNum: typeof useDictToNum;
     download: typeof utilsDownload;
     parseTime: typeof parseTime;
-    resetForm: typeof resetForm;
     handleTree: typeof handleTree;
     modelTree: typeof modelTree;
     addDateRange: typeof addDateRange;
@@ -42,9 +40,5 @@ declare module 'vue' {
 }
 
 declare global {
-  interface Window {
-    VConsole: any;
-  }
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  // interface ImportMeta {}
+  type Recordable<T = any> = Record<string, T>;
 }
