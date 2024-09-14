@@ -2,7 +2,9 @@
 import type { GlobalTheme } from 'naive-ui';
 import { darkTheme } from 'naive-ui';
 const settingStore = useDesignSettingStore();
-const theme = computed((): GlobalTheme | null => settingStore.darkTheme ? darkTheme : null);
+const theme = computed((): GlobalTheme | null =>
+  settingStore.darkTheme ? darkTheme : null
+);
 import { lighten } from './utils';
 import { useDesignSettingStore } from './store/modules/designSetting';
 /**
@@ -16,17 +18,21 @@ const getThemeOverrides = computed(() => {
       primaryColor: appTheme,
       primaryColorHover: lightenStr,
       primaryColorPressed: lightenStr,
-      primaryColorSuppl: appTheme,
+      primaryColorSuppl: appTheme
     },
     LoadingBar: {
-      colorLoading: appTheme,
-    },
+      colorLoading: appTheme
+    }
   };
 });
 </script>
 
 <template>
-  <n-config-provider :theme="theme" :theme-overrides="getThemeOverrides" preflight-style-disabled>
+  <n-config-provider
+    :theme="theme"
+    :theme-overrides="getThemeOverrides"
+    preflight-style-disabled
+  >
     <RouterView />
   </n-config-provider>
 </template>

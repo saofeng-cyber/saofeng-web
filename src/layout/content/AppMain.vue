@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts" setup>
-import Setting from '../setting/index.vue'
+import Setting from '../setting/index.vue';
 </script>
 <style lang="scss" scoped>
 .layout-main {

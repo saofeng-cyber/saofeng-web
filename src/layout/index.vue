@@ -6,7 +6,6 @@
       <AppMain class="flex-1" />
     </div>
   </n-layout>
-
 </template>
 <script lang="ts" setup>
 import AppSide from './side/AppSide.vue';

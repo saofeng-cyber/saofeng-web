@@ -16,10 +16,17 @@ const handleConfirm = () => {
 </script>
 <template>
   <div class="console">
-    <n-color-picker v-model:value="themeColor" :show="showPicker" :show-alpha="false" style="width: 120px;"
-      @update:show="showPicker = $event">
+    <n-color-picker
+      v-model:value="themeColor"
+      :show="showPicker"
+      :show-alpha="false"
+      style="width: 120px"
+      @update:show="showPicker = $event"
+    >
       <template #action>
-        <n-button type="primary" size="small" @click="handleConfirm">确定</n-button>
+        <n-button type="primary" size="small" @click="handleConfirm"
+          >确定</n-button
+        >
       </template>
     </n-color-picker>
   </div>
