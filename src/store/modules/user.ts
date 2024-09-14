@@ -1,5 +1,5 @@
 import { getInfo, login } from '@/api/login';
-import { setToken } from '@/utils/auth';
+import { removeToken, setToken } from '@/utils/auth';
 
 export const useUserStore = defineStore('user', () => {
   // state
@@ -17,8 +17,22 @@ export const useUserStore = defineStore('user', () => {
       username: parmas.username,
       password: parmas.password
     });
-    setToken(result.token, Number(result.expires_in) / 60);
+    console.log(result);
+    const { data } = result;
+    setToken(data.token, Number(data.expires_in) / 60);
     return result;
+  };
+  const userLoginout = () => {
+    // TODO: 清除token
+    removeToken();
+    // TODO: 清除用户信息
+    userInfo.username = '';
+    userInfo.password = '';
+    userInfo.email = '';
+    userInfo.avatar = '';
+    // TODO: 清除权限信息
+    permissionsList.value = [];
+    roles.value = [];
   };
   const getUserInfo = async () => {
     const { data } = await getInfo();
@@ -33,6 +47,7 @@ export const useUserStore = defineStore('user', () => {
     roles,
     permissionsList,
     userLogin,
-    getUserInfo
+    getUserInfo,
+    userLoginout
   };
 });

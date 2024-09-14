@@ -36,5 +36,5 @@ const clickMenuItem = (key: string) => {
   }
 };
 
-const menuOptions = createMenu(asyncRouteStore.asyncRouters);
+const menuOptions = createMenu(asyncRouteStore.menuOption);
 </script>

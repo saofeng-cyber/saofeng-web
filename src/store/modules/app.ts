@@ -1,15 +1,8 @@
-interface userInfo {
-  role: string;
-  permissionsList: string[];
-  username: string;
-  password: string;
-  avatar: string;
-}
 export const useAppStore = defineStore(
   'app',
   () => {
     // state
-    const sideWidth = ref(200);
+    const sideWidth = ref(220);
     const collapsed = ref(true);
     // actions
     const setSideWidth = (width: number) => {

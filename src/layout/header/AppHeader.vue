@@ -16,10 +16,10 @@
 import { useAppStore } from '@/store/modules/app';
 import AppBreadcrumb from './AppBreadcrumb.vue';
 const useApp = useAppStore();
-const isCollapsed = computed(() => useApp.collapsed);
+const { collapsed, sideWidth } = storeToRefs(useApp);
 const headerStyle = computed(() => {
   return {
-    width: isCollapsed.value ? 'calc(100% - 64px)' : 'calc(100% - 240px)'
+    width: collapsed.value ? 'calc(100% - 64px)' : `calc(100% - ${sideWidth.value}px)`
   };
 });
 </script>

@@ -5,19 +5,25 @@ import type {
   AxiosResponse,
   InternalAxiosRequestConfig
 } from './types/index';
+import { useDiscteate } from '@/store/modules/discteate';
 import { REQUEST_TIMEOUT } from './constant';
 import { getToken } from '@/utils/auth';
 export const PATH_URL = import.meta.env.VITE_APP_BASE_API;
-
 const service: AxiosInstance = axios.create({
   timeout: REQUEST_TIMEOUT,
   baseURL: PATH_URL
 });
-
 service.interceptors.request.use((config: InternalAxiosRequestConfig) => {
-  // const controller = new AbortController();
-  // res.signal = controller.signal;
-  config.headers['Authorization'] = 'Bearer ' + getToken();
+  if (!config['headers'].isToken) {
+    return config;
+  }
+  const token = getToken();
+  const { useMsg } = useDiscteate();
+  if (!token) {
+    useMsg('token不存在或已失效，请重新登录', 'error');
+    return Promise.reject('token不存在或已失效，请重新登录');
+  }
+  config.headers['Authorization'] = 'Bearer ' + token;
   return config;
 });
 

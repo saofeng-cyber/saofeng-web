@@ -4,7 +4,9 @@ import {
   type RouteRecordRaw
 } from 'vue-router';
 
-import type { IModuleType } from './route';
+export interface IModuleType {
+  default: Array<RouteRecordRaw> | RouteRecordRaw;
+}
 
 const modules = import.meta.glob<IModuleType>('./modules/*.ts', {
   eager: true
@@ -19,7 +21,13 @@ const routeModuleList: RouteRecordRaw[] = Object.keys(modules).reduce(
   []
 );
 
-function sortRoute(a: any, b: any) {
+function sortRoute(a: RouteRecordRaw, b: RouteRecordRaw) {
+  if (a.children) {
+    a.children.sort(sortRoute);
+  }
+  if (b.children) {
+    b.children.sort(sortRoute);
+  }
   return (a.meta?.sort ?? 0) - (b.meta?.sort ?? 0);
 }
 

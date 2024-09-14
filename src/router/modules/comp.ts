@@ -34,7 +34,8 @@ const routes: Array<RouteRecordRaw> = [
         name: `${routeName}_table`,
         component: () => import('@/views/components/table/index.vue'),
         meta: {
-          title: '表格'
+          title: '表格',
+          hidden: true
         }
       },
       {
@@ -42,14 +43,16 @@ const routes: Array<RouteRecordRaw> = [
         name: `${routeName}_form`,
         component: () => import('@/views/components/form/index.vue'),
         meta: {
-          title: '表单'
+          title: '表单',
+          sort: 3
         }
       },
       {
         path: 'drag',
         name: `Drag`,
         meta: {
-          title: '拖拽'
+          title: '拖拽',
+          sort: 2
         },
         component: () => import('@/views/components/drag/index.vue')
       }

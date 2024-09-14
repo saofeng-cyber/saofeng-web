@@ -15,7 +15,6 @@
     "commitlint": "commitlint --edit"
   },
   "dependencies": {
-    "@element-plus/icons-vue": "^2.3.1",
     "@fullcalendar/core": "^6.1.15",
     "@fullcalendar/daygrid": "^6.1.15",
     "@fullcalendar/list": "^6.1.15",

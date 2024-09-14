@@ -42,12 +42,16 @@ export const createRouterGuards = (router: Router) => {
     }
     const userInfo = await userStore.getUserInfo();
     const routes = asyncRouteStore.generateRoutes(userInfo);
+
     // 动态添加可访问路由表
     routes.forEach((route) => {
       router.addRoute(route);
     });
-    asyncRouteStore.setDynamicRouteAdded(true);
 
+    // hack方法 确保addRoutes已完成
+    asyncRouteStore.setDynamicRouteAdded(true);
+    // 设置菜单侧边栏,过滤隐藏的路由
+    asyncRouteStore.setMenuOption(routes);
     const redirectPath = (from.query.redirect || to.path) as string;
     const redirect = decodeURIComponent(redirectPath);
     const nextData = to.path === redirect ? { ...to } : { path: redirect };

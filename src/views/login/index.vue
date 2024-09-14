@@ -46,7 +46,7 @@ const handleLogin = () => {
             <n-input v-model:value="formValue.username" placeholder="输入姓名" />
           </n-form-item>
           <n-form-item label="密码" path="password">
-            <n-input v-model:value="formValue.password" placeholder="输入密码" />
+            <n-input v-model:value="formValue.password" type="password" placeholder="输入密码" />
           </n-form-item>
           <n-form-item>
             <n-button type="primary" @click="handleLogin" block circle dashed>登录</n-button>
