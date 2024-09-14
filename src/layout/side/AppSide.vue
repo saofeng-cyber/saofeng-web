@@ -1,6 +1,14 @@
 <template>
-  <n-layout-sider class="layout-sider" :collapsed="collapsed" collapse-mode="width" :collapsed-width="64"
-    :width="sideWidth" show-trigger :native-scrollbar="false" @update:collapsed="onUpdateCollapsed">
+  <n-layout-sider
+    class="layout-sider"
+    :collapsed="collapsed"
+    collapse-mode="width"
+    :collapsed-width="64"
+    :width="sideWidth"
+    show-trigger
+    :native-scrollbar="false"
+    @update:collapsed="onUpdateCollapsed"
+  >
     <Logo :isCollapsed="collapsed" />
     <AppMenu :collapsed="collapsed" />
   </n-layout-sider>

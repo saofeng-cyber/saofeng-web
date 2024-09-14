@@ -19,7 +19,9 @@ const useApp = useAppStore();
 const { collapsed, sideWidth } = storeToRefs(useApp);
 const headerStyle = computed(() => {
   return {
-    width: collapsed.value ? 'calc(100% - 64px)' : `calc(100% - ${sideWidth.value}px)`
+    width: collapsed.value
+      ? 'calc(100% - 64px)'
+      : `calc(100% - ${sideWidth.value}px)`
   };
 });
 </script>
