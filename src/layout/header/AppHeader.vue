@@ -33,7 +33,7 @@ const headerStyle = computed(() => {
   height: 64px;
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
   transition: all 0.2s ease-in-out;
-  background-color: #fff;
+  // background-color: #fff;
   z-index: 999;
 }
 </style>

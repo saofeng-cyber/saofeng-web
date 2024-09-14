@@ -5,6 +5,7 @@ export const useAppStore = defineStore(
     const sideWidth = ref(220);
     const collapsed = ref(true);
     // actions
+
     const setSideWidth = (width: number) => {
       sideWidth.value = width;
     };

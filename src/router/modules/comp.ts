@@ -34,8 +34,7 @@ const routes: Array<RouteRecordRaw> = [
         name: `${routeName}_table`,
         component: () => import('@/views/components/table/index.vue'),
         meta: {
-          title: '表格',
-          hidden: true
+          title: '表格'
         }
       },
       {

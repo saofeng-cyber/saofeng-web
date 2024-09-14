@@ -12,12 +12,15 @@
           </template>
         </RouterView>
       </div>
+      <Setting />
       <n-back-top :right="100" />
     </n-scrollbar>
   </div>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import Setting from '../setting/index.vue'
+</script>
 <style lang="scss" scoped>
 .layout-main {
   padding-top: 64px;
