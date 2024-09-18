@@ -27,19 +27,30 @@ export const useTagesViewStore = defineStore(
       }
       return true;
     };
-    const removeTagsView = (view: RouteItem) => {
+    const removeTagsView = (fullPath: string) => {
       const index = tagsViewList.value.findIndex(
-        (item) => item.fullPath == view.fullPath
+        (item) => item.fullPath == fullPath
       );
       if (index > -1) {
         tagsViewList.value.splice(index, 1);
       }
     };
+    const closeOtherTagsView = (fullPath: string) => {
+      tagsViewList.value = tagsViewList.value.filter(
+        (item) => item.fullPath == fullPath || item.meta.affix
+      );
+    }
+
+    const closeAllTagsView = () => {
+      tagsViewList.value = tagsViewList.value.filter((item) => item.meta.affix);
+    }
     return {
       tagsViewList,
       visitedViews,
       addTagsView,
-      removeTagsView
+      removeTagsView,
+      closeOtherTagsView,
+      closeAllTagsView
     };
   },
   {

@@ -20,13 +20,33 @@ export const appThemeList: string[] = [
   '#FC5404'
 ];
 
+export const tabOptions = [
+  {
+    label: 'bar',
+    value: 'bar'
+  },
+  {
+    label: 'line',
+    value: 'line'
+  },
+  {
+    label: 'card',
+    value: 'card'
+  },
+  {
+    label: 'segment',
+    value: 'segment'
+  }
+]
+
 const setting = {
   //深色主题
   darkTheme: false,
   //系统主题色
   appTheme: '#2d8cf0',
   //系统内置主题色列表
-  appThemeList
+  appThemeList,
+  tabOptions
 };
 
 export default setting;

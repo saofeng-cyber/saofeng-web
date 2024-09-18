@@ -8,6 +8,8 @@ export const useDesignSettingStore = defineStore(
     const darkTheme = ref(designSetting.darkTheme);
     const appTheme = ref(designSetting.appTheme);
     const appThemeList = ref(designSetting.appThemeList);
+    const tabOptions = ref(designSetting.tabOptions);
+    const tabActive = ref('card');
 
     const setCollapsed = (flag: boolean) => {
       collapsed.value = flag;
@@ -16,6 +18,10 @@ export const useDesignSettingStore = defineStore(
     const setSideWidth = (width: number) => {
       sideWidth.value = width;
     };
+
+    const setTabActive = (active: string) => {
+      tabActive.value = active;
+    }
     // 设置主题
     const setTheme = (theme: string) => {
       appTheme.value = theme;
@@ -27,6 +33,7 @@ export const useDesignSettingStore = defineStore(
     const resetTheme = () => {
       darkTheme.value = designSetting.darkTheme;
       appTheme.value = designSetting.appTheme;
+      tabActive.value = 'card'
     };
     return {
       collapsed,
@@ -38,7 +45,10 @@ export const useDesignSettingStore = defineStore(
       appThemeList,
       setTheme,
       setDarkTheme,
-      resetTheme
+      resetTheme,
+      tabOptions,
+      tabActive,
+      setTabActive
     };
   },
   {

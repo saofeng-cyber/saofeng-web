@@ -41,7 +41,8 @@ const routes: Array<RouteRecordRaw> = [
         path: 'monitor',
         name: `${routeName}_monitor`,
         meta: {
-          title: '监控页'
+          title: '监控页',
+          affix: true
         },
         component: () => import('@/views/dashboard/monitor/monitor.vue')
       },
@@ -50,7 +51,8 @@ const routes: Array<RouteRecordRaw> = [
         name: `${routeName}_workplace`,
         meta: {
           title: '工作台',
-          keepAlive: true
+          keepAlive: true,
+          affix: true
         },
         component: () => import('@/views/dashboard/workplace/workplace.vue')
       }

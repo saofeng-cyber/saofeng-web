@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { CloseCircleOutline } from '@vicons/ionicons5';
+import { useDesignSettingStore } from '@/store/modules/designSetting';
 import { useTagesViewStore, type RouteItem } from '@/store/modules/tagsView';
+const tabsRef = ref();
 const tagesViewStore = useTagesViewStore();
+const settingStore = useDesignSettingStore();
 const route = useRoute();
 const router = useRouter();
 // 获取简易的路由对象
@@ -11,89 +13,135 @@ const getSimpleRoute = (route: any): RouteItem => {
 };
 
 const state = reactive({
-  activeKey: route.fullPath
+  activeKey: route.fullPath,
+  vistedKey: ''
 });
 const tabsList: any = computed(() => tagesViewStore.tagsViewList);
-const removeTab = (view: RouteItem) => {
-  if (tabsList.value.length === 1) {
-    return;
-  }
-  tagesViewStore.removeTagsView(view);
+const removeTab = (fullPath: string) => {
+  if (tabsList.value.length === 1) return;
+  tagesViewStore.removeTagsView(fullPath);
   // 是当前激活的标签页
-  if (state.activeKey === view.fullPath) {
+  if (state.activeKey === fullPath) {
     const nextView = tabsList.value[Math.max(0, tabsList.value.length - 1)];
     router.push(nextView.fullPath);
   }
 };
+
+const jumpTo = (path: string) => {
+  router.push(path);
+}
 
 watch(
   () => route.fullPath,
   (newVal) => {
     state.activeKey = newVal;
     tagesViewStore.addTagsView(getSimpleRoute(route));
+    nextTick(() => {
+      tabsRef.value?.syncBarPosition();
+    })
   },
   {
     immediate: true,
     deep: true
   }
 );
+
+watch(() => settingStore.tabActive, () => {
+  nextTick(() => {
+    tabsRef.value?.syncBarPosition();
+  })
+})
+
+const x = ref(0);
+const y = ref(0);
+const showDropdownRef = ref(false);
+const openMenu = (e: MouseEvent, item: RouteItem) => {
+  console.log('openMenu', e, item);
+  state.vistedKey = item.fullPath;
+  e.preventDefault();
+  showDropdownRef.value = false
+  nextTick(() => {
+    showDropdownRef.value = true
+    x.value = e.clientX;
+    y.value = e.clientY;
+  })
+}
+
+const options = ref([
+  {
+    label: '刷新当前标签页',
+    key: 'refresh'
+  },
+  {
+    label: '关闭当前标签页',
+    key: 'closeCurrent'
+  },
+  {
+    label: '关闭其他标签页',
+    key: 'closeOther'
+  },
+  {
+    label: '关闭全部标签页',
+    key: 'closeAll'
+  }
+]);
+
+const handleSelect = (key: string) => {
+  switch (key) {
+    case 'refresh':
+      router.go(0);
+      break;
+    case 'closeCurrent':
+      removeTab(state.activeKey);
+      break;
+    case 'closeOther':
+      if (state.vistedKey === state.activeKey) {
+        tagesViewStore.closeOtherTagsView(state.activeKey);
+      } else {
+        tagesViewStore.closeOtherTagsView(state.vistedKey);
+        router.push(state.vistedKey);
+      }
+      break;
+    case 'closeAll':
+      tagesViewStore.closeAllTagsView();
+      router.push('/');
+      break;
+  }
+  nextTick(() => {
+    tabsRef.value?.syncBarPosition();
+    clickoutside();
+  })
+}
+
+const clickoutside = () => {
+  showDropdownRef.value = false
+}
 </script>
 <template>
-  <div class="tags-views" style="--n-color: #1890ff; --n-border-hover: #1890ff">
-    <div
-      class="tags"
-      v-for="item in tabsList"
-      :key="item.fullPath"
-      :style="{
-        color: state.activeKey === item.fullPath ? '#1890ff' : '#333333',
-        border:
-          state.activeKey === item.fullPath
-            ? '1px solid #1890ff'
-            : '1px solid #f0f0f0'
-      }"
-    >
-      <router-link class="tag" :to="item.fullPath">
-        {{ item.meta.title }}
-      </router-link>
-      <n-icon
-        v-if="!item.meta.affix"
-        size="16"
-        @click="removeTab(item)"
-        style="margin-left: 4px; cursor: pointer"
-      >
-        <CloseCircleOutline />
-      </n-icon>
+  <div class="tags-contanier">
+    <n-tabs ref="tabsRef" v-model:value="state.activeKey" pane-class="tags-views" size="small"
+      :type="settingStore.tabActive" @close="removeTab" @update:value="jumpTo">
+      <n-tab v-for="item in tabsList" :closable="!item.meta.affix" :key="item.fullPath" :name="item.fullPath"
+        @contextmenu="openMenu($event, item)">
+        <span>{{ item.meta.title }}</span>
+      </n-tab>
+    </n-tabs>
+    <div class="tags-action">
+      <n-dropdown placement="bottom-start" trigger="manual" :show="showDropdownRef" :x="x" :y="y" :options="options"
+        @select="handleSelect" @clickoutside="clickoutside" />
     </div>
   </div>
 </template>
 <style lang="scss" scoped>
-.tags-views {
-  width: 100%;
+.tags-contanier {
   height: 48px;
-  background-color: #fff;
-  border-bottom: 1px solid #f0f0f0;
-  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
   padding: 0 12px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  box-shadow: 0 1px 4px rgb(0 21 41 / 8%);
+}
 
-  .tags {
-    display: flex;
-    padding: 0 12px;
-    align-items: center;
-    border: 1px solid #d9d9d9;
-    border-radius: 4px;
-    height: 32px;
-    line-height: 32px;
-    font-size: 12px;
-    white-space: nowrap;
-    color: #333333;
-
-    &:hover {
-      color: var(--n-color);
-      border-color: var(--n-border-hover);
-    }
-  }
+.tags-views {
+  --n-pane-padding-top: 0;
 }
 </style>
