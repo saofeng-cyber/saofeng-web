@@ -67,7 +67,7 @@ const showAlertDanger = () => {
 };
 </script>
 <template>
-  <div class="container">
+  <div class="workplace">
     <div class="flex px-3">
       <n-space>
         <n-button @click="showModal = true">点我打开弹窗</n-button>
@@ -90,12 +90,7 @@ const showAlertDanger = () => {
         <SimpleDatatable />
       </div>
     </div>
-    <n-modal
-      v-model:show="showModal"
-      title="配置"
-      preset="card"
-      style="width: 600px; min-height: 420px"
-    >
+    <n-modal v-model:show="showModal" title="配置" preset="card" style="width: 600px; min-height: 420px">
       <n-tabs type="segment" animated>
         <n-tab-pane name="chap1" tab="纸嫁衣一">
           我这辈子最疯狂的事，发生在我在 Amazon

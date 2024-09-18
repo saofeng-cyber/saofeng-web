@@ -19,13 +19,13 @@ export default defineConfig(({ mode, command }) => {
     },
     envDir: './env',
     server: {
+      port: 8088,
       open: true,
       host: true,
       proxy: {
         // https://cn.vitejs.dev/config/#server-proxy
         '/api': {
           target: 'http://localhost:5173/',
-          // target: 'http://10.68.18.118:8089',
           changeOrigin: true,
           rewrite: (p) => p.replace(/^\/dev-api/, '')
         }

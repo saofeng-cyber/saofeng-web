@@ -3,12 +3,14 @@
     <AppSide />
     <div class="layout-content">
       <AppHeader />
-      <AppMain class="flex-1" />
+      <AppTag />
+      <AppMain />
     </div>
   </n-layout>
 </template>
 <script lang="ts" setup>
 import AppSide from './side/AppSide.vue';
+import AppTag from './tags/AppTag.vue';
 import AppHeader from './header/AppHeader.vue';
 import AppMain from './content/AppMain.vue';
 </script>
