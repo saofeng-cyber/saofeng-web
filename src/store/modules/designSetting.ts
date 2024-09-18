@@ -21,7 +21,7 @@ export const useDesignSettingStore = defineStore(
 
     const setTabActive = (active: string) => {
       tabActive.value = active;
-    }
+    };
     // 设置主题
     const setTheme = (theme: string) => {
       appTheme.value = theme;
@@ -33,7 +33,7 @@ export const useDesignSettingStore = defineStore(
     const resetTheme = () => {
       darkTheme.value = designSetting.darkTheme;
       appTheme.value = designSetting.appTheme;
-      tabActive.value = 'card'
+      tabActive.value = 'card';
     };
     return {
       collapsed,

@@ -29,7 +29,7 @@ const removeTab = (fullPath: string) => {
 
 const jumpTo = (path: string) => {
   router.push(path);
-}
+};
 
 watch(
   () => route.fullPath,
@@ -38,7 +38,7 @@ watch(
     tagesViewStore.addTagsView(getSimpleRoute(route));
     nextTick(() => {
       tabsRef.value?.syncBarPosition();
-    })
+    });
   },
   {
     immediate: true,
@@ -46,11 +46,14 @@ watch(
   }
 );
 
-watch(() => settingStore.tabActive, () => {
-  nextTick(() => {
-    tabsRef.value?.syncBarPosition();
-  })
-})
+watch(
+  () => settingStore.tabActive,
+  () => {
+    nextTick(() => {
+      tabsRef.value?.syncBarPosition();
+    });
+  }
+);
 
 const x = ref(0);
 const y = ref(0);
@@ -59,13 +62,13 @@ const openMenu = (e: MouseEvent, item: RouteItem) => {
   console.log('openMenu', e, item);
   state.vistedKey = item.fullPath;
   e.preventDefault();
-  showDropdownRef.value = false
+  showDropdownRef.value = false;
   nextTick(() => {
-    showDropdownRef.value = true
+    showDropdownRef.value = true;
     x.value = e.clientX;
     y.value = e.clientY;
-  })
-}
+  });
+};
 
 const options = ref([
   {
@@ -110,25 +113,45 @@ const handleSelect = (key: string) => {
   nextTick(() => {
     tabsRef.value?.syncBarPosition();
     clickoutside();
-  })
-}
+  });
+};
 
 const clickoutside = () => {
-  showDropdownRef.value = false
-}
+  showDropdownRef.value = false;
+};
 </script>
 <template>
   <div class="tags-contanier">
-    <n-tabs ref="tabsRef" v-model:value="state.activeKey" pane-class="tags-views" size="small"
-      :type="settingStore.tabActive" @close="removeTab" @update:value="jumpTo">
-      <n-tab v-for="item in tabsList" :closable="!item.meta.affix" :key="item.fullPath" :name="item.fullPath"
-        @contextmenu="openMenu($event, item)">
+    <n-tabs
+      ref="tabsRef"
+      v-model:value="state.activeKey"
+      pane-class="tags-views"
+      size="small"
+      :type="settingStore.tabActive"
+      @close="removeTab"
+      @update:value="jumpTo"
+    >
+      <n-tab
+        v-for="item in tabsList"
+        :closable="!item.meta.affix"
+        :key="item.fullPath"
+        :name="item.fullPath"
+        @contextmenu="openMenu($event, item)"
+      >
         <span>{{ item.meta.title }}</span>
       </n-tab>
     </n-tabs>
     <div class="tags-action">
-      <n-dropdown placement="bottom-start" trigger="manual" :show="showDropdownRef" :x="x" :y="y" :options="options"
-        @select="handleSelect" @clickoutside="clickoutside" />
+      <n-dropdown
+        placement="bottom-start"
+        trigger="manual"
+        :show="showDropdownRef"
+        :x="x"
+        :y="y"
+        :options="options"
+        @select="handleSelect"
+        @clickoutside="clickoutside"
+      />
     </div>
   </div>
 </template>

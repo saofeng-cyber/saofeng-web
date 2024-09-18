@@ -37,7 +37,7 @@ export const tabOptions = [
     label: 'segment',
     value: 'segment'
   }
-]
+];
 
 const setting = {
   //深色主题

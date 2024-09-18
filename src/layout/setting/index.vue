@@ -94,7 +94,11 @@ const restTheme = () => {
           :item-style="{ padding: '12px 0' }"
         >
           <div class="drawer-setting-item-title">tab标签样式</div>
-          <n-select v-model:value="settingStore.tabActive" :options="settingStore.tabOptions" style="width: 120px;" />
+          <n-select
+            v-model:value="settingStore.tabActive"
+            :options="settingStore.tabOptions"
+            style="width: 120px"
+          />
         </n-space>
         <template #footer>
           <n-button type="primary" round @click="restTheme">

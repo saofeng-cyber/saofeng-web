@@ -39,11 +39,11 @@ export const useTagesViewStore = defineStore(
       tagsViewList.value = tagsViewList.value.filter(
         (item) => item.fullPath == fullPath || item.meta.affix
       );
-    }
+    };
 
     const closeAllTagsView = () => {
       tagsViewList.value = tagsViewList.value.filter((item) => item.meta.affix);
-    }
+    };
     return {
       tagsViewList,
       visitedViews,
