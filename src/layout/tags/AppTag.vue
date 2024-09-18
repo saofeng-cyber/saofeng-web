@@ -60,6 +60,7 @@ const y = ref(0);
 const showDropdownRef = ref(false);
 const openMenu = (e: MouseEvent, item: RouteItem) => {
   console.log('openMenu', e, item);
+  options.value[1].disabled = item.meta.affix ?? false;
   state.vistedKey = item.fullPath;
   e.preventDefault();
   showDropdownRef.value = false;
@@ -73,19 +74,23 @@ const openMenu = (e: MouseEvent, item: RouteItem) => {
 const options = ref([
   {
     label: '刷新当前标签页',
-    key: 'refresh'
+    key: 'refresh',
+    disabled: false
   },
   {
     label: '关闭当前标签页',
-    key: 'closeCurrent'
+    key: 'closeCurrent',
+    disabled: false
   },
   {
     label: '关闭其他标签页',
-    key: 'closeOther'
+    key: 'closeOther',
+    disabled: false
   },
   {
     label: '关闭全部标签页',
-    key: 'closeAll'
+    key: 'closeAll',
+    disabled: false
   }
 ]);
 
