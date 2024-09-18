@@ -13,10 +13,10 @@
 </template>
 
 <script lang="ts" setup>
-import { useAppStore } from '@/store/modules/app';
 import AppBreadcrumb from './AppBreadcrumb.vue';
-const useApp = useAppStore();
-const { collapsed, sideWidth } = storeToRefs(useApp);
+import { useDesignSettingStore } from '@/store/modules/designSetting';
+const settingStore = useDesignSettingStore();
+const { collapsed, sideWidth } = storeToRefs(settingStore);
 const headerStyle = computed(() => {
   return {
     width: collapsed.value

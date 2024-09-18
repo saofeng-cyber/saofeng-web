@@ -1,14 +1,6 @@
 <template>
-  <n-layout-sider
-    class="layout-sider"
-    :collapsed="collapsed"
-    collapse-mode="width"
-    :collapsed-width="64"
-    :width="sideWidth"
-    show-trigger
-    :native-scrollbar="false"
-    @update:collapsed="onUpdateCollapsed"
-  >
+  <n-layout-sider class="layout-sider" :collapsed="collapsed" collapse-mode="width" :collapsed-width="64"
+    :width="sideWidth" show-trigger :native-scrollbar="false" @update:collapsed="onUpdateCollapsed">
     <Logo :isCollapsed="collapsed" />
     <AppMenu :collapsed="collapsed" />
   </n-layout-sider>
@@ -17,12 +9,12 @@
 <script lang="ts" setup>
 import AppMenu from './menu/AppMenu.vue';
 import Logo from '@/components/Logo.vue';
-import { useAppStore } from '@/store/modules/app';
+import { useDesignSettingStore } from '@/store/modules/designSetting';
 
-const useApp = useAppStore();
-const { collapsed, sideWidth } = storeToRefs(useApp);
+const designSettingStore = useDesignSettingStore();
+const { collapsed, sideWidth } = storeToRefs(designSettingStore);
 const onUpdateCollapsed = () => {
-  useApp.setCollapsed(!collapsed.value);
+  designSettingStore.setCollapsed(!collapsed.value);
 };
 </script>
 <style lang="scss">
