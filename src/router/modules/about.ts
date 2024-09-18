@@ -24,7 +24,7 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/about/index.vue'),
         meta: {
           title: '关于',
-          hidden: true
+          hidden: false
         }
       }
     ]

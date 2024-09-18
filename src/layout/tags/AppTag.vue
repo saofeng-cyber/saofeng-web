@@ -127,36 +127,16 @@ const clickoutside = () => {
 </script>
 <template>
   <div class="tags-contanier">
-    <n-tabs
-      ref="tabsRef"
-      v-model:value="state.activeKey"
-      pane-class="tags-views"
-      size="small"
-      :type="settingStore.tabActive"
-      @close="removeTab"
-      @update:value="jumpTo"
-    >
-      <n-tab
-        v-for="item in tabsList"
-        :closable="!item.meta.affix"
-        :key="item.fullPath"
-        :name="item.fullPath"
-        @contextmenu="openMenu($event, item)"
-      >
+    <n-tabs ref="tabsRef" v-model:value="state.activeKey" tab-class="tags-views" size="small"
+      :type="settingStore.tabActive" @close="removeTab" @update:value="jumpTo">
+      <n-tab v-for="item in tabsList" :closable="!item.meta.affix" :key="item.fullPath" :name="item.fullPath"
+        @contextmenu="openMenu($event, item)">
         <span>{{ item.meta.title }}</span>
       </n-tab>
     </n-tabs>
     <div class="tags-action">
-      <n-dropdown
-        placement="bottom-start"
-        trigger="manual"
-        :show="showDropdownRef"
-        :x="x"
-        :y="y"
-        :options="options"
-        @select="handleSelect"
-        @clickoutside="clickoutside"
-      />
+      <n-dropdown placement="bottom-start" trigger="manual" :show="showDropdownRef" :x="x" :y="y" :options="options"
+        @select="handleSelect" @clickoutside="clickoutside" />
     </div>
   </div>
 </template>
