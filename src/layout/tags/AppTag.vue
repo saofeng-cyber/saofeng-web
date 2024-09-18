@@ -60,7 +60,10 @@ const y = ref(0);
 const showDropdownRef = ref(false);
 const openMenu = (e: MouseEvent, item: RouteItem) => {
   console.log('openMenu', e, item);
+  options.value[0].disabled = item.fullPath !== state.activeKey;
   options.value[1].disabled = item.meta.affix ?? false;
+  options.value[2].disabled = tabsList.value.length === 1;
+  options.value[3].disabled = tabsList.value.length === 1;
   state.vistedKey = item.fullPath;
   e.preventDefault();
   showDropdownRef.value = false;
@@ -127,16 +130,36 @@ const clickoutside = () => {
 </script>
 <template>
   <div class="tags-contanier">
-    <n-tabs ref="tabsRef" v-model:value="state.activeKey" tab-class="tags-views" size="small"
-      :type="settingStore.tabActive" @close="removeTab" @update:value="jumpTo">
-      <n-tab v-for="item in tabsList" :closable="!item.meta.affix" :key="item.fullPath" :name="item.fullPath"
-        @contextmenu="openMenu($event, item)">
+    <n-tabs
+      ref="tabsRef"
+      v-model:value="state.activeKey"
+      tab-class="tags-views"
+      size="small"
+      :type="settingStore.tabActive"
+      @close="removeTab"
+      @update:value="jumpTo"
+    >
+      <n-tab
+        v-for="item in tabsList"
+        :closable="!item.meta.affix"
+        :key="item.fullPath"
+        :name="item.fullPath"
+        @contextmenu="openMenu($event, item)"
+      >
         <span>{{ item.meta.title }}</span>
       </n-tab>
     </n-tabs>
     <div class="tags-action">
-      <n-dropdown placement="bottom-start" trigger="manual" :show="showDropdownRef" :x="x" :y="y" :options="options"
-        @select="handleSelect" @clickoutside="clickoutside" />
+      <n-dropdown
+        placement="bottom-start"
+        trigger="manual"
+        :show="showDropdownRef"
+        :x="x"
+        :y="y"
+        :options="options"
+        @select="handleSelect"
+        @clickoutside="clickoutside"
+      />
     </div>
   </div>
 </template>
