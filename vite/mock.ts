@@ -7,6 +7,7 @@ import { viteMockServe } from 'vite-plugin-mock';
 export function configMockPlugin() {
   return viteMockServe({
     mockPath: 'src/mock', // mock文件夹路径
-    enable: true
+    enable: true,
+    cors: true
   });
 }
