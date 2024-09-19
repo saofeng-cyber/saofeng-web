@@ -1,5 +1,5 @@
 import { createProdMockServer } from 'vite-plugin-mock/client';
-import userModule from './mock/modules/user'; // 引入mock数据
+import userModule from '@/mock/user'; // 引入mock数据
 
 /**
  * mockjs 语法参考: https://github.com/nuysoft/Mock/wiki/Syntax-Specification
