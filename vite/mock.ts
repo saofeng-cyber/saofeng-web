@@ -8,7 +8,6 @@ export function configMockPlugin(isBuild: boolean) {
   return viteMockServe({
     mockPath: 'mock',
     enable: true,
-    watchFiles: true,
-    cors: true
+    watchFiles: true
   });
 }
