@@ -16,7 +16,9 @@ const dropdownSelect = (key: string) => {
 
 // 生成面包屑
 
-const generateBreadcrumb = (routerMap: RouteLocationNormalizedLoadedGeneric) => {
+const generateBreadcrumb = (
+  routerMap: RouteLocationNormalizedLoadedGeneric
+) => {
   breadcrumbArr.value = [];
   routerMap.matched.forEach((item) => {
     breadcrumbArr.value.push({
@@ -30,12 +32,12 @@ const generateBreadcrumb = (routerMap: RouteLocationNormalizedLoadedGeneric) => 
       })
     });
   });
-}
+};
 
 watch(
   route,
   (newRoute) => {
-    generateBreadcrumb(newRoute)
+    generateBreadcrumb(newRoute);
   },
   { immediate: true }
 );

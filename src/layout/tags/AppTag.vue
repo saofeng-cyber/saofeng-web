@@ -4,7 +4,12 @@ import { PageEnum } from '@/enums/pageEnum';
 import { useDesignSettingStore } from '@/store/modules/designSetting';
 import { useTagesViewStore, type RouteItem } from '@/store/modules/tagsView';
 import { renderIcon } from '@/utils/tools';
-import { CloseOutlined, ColumnWidthOutlined, MinusOutlined, ReloadOutlined } from '@vicons/antd';
+import {
+  CloseOutlined,
+  ColumnWidthOutlined,
+  MinusOutlined,
+  ReloadOutlined
+} from '@vicons/antd';
 const tabsRef = ref();
 const tagesViewStore = useTagesViewStore();
 const settingStore = useDesignSettingStore();
@@ -85,25 +90,25 @@ const options = ref<DropdownOption[]>([
     label: '刷新当前标签页',
     key: 'refresh',
     disabled: false,
-    icon: renderIcon(ReloadOutlined),
+    icon: renderIcon(ReloadOutlined)
   },
   {
     label: '关闭当前标签页',
     key: 'closeCurrent',
     disabled: false,
-    icon: renderIcon(CloseOutlined),
+    icon: renderIcon(CloseOutlined)
   },
   {
     label: '关闭其他标签页',
     key: 'closeOther',
     disabled: false,
-    icon: renderIcon(ColumnWidthOutlined),
+    icon: renderIcon(ColumnWidthOutlined)
   },
   {
     label: '关闭全部标签页',
     key: 'closeAll',
     disabled: false,
-    icon: renderIcon(MinusOutlined),
+    icon: renderIcon(MinusOutlined)
   }
 ]);
 
@@ -147,7 +152,7 @@ const handleSelect = (key: string) => {
 const updateTagsView = () => {
   tabsRef.value?.syncBarPosition();
   state.showDropdown = false;
-}
+};
 
 const clickoutside = () => {
   updateTagsView();
@@ -155,10 +160,22 @@ const clickoutside = () => {
 </script>
 <template>
   <div class="tags-contanier">
-    <n-tabs ref="tabsRef" v-model:value="state.activeKey" tab-class="tags-views" size="small"
-      :type="settingStore.tabActive" @close="removeTab" @update:value="jumpTo">
-      <n-tab v-for="item in tabsList" :closable="!item.meta.affix" :key="item.fullPath" :name="item.fullPath"
-        @contextmenu="openMenu($event, item)">
+    <n-tabs
+      ref="tabsRef"
+      v-model:value="state.activeKey"
+      tab-class="tags-views"
+      size="small"
+      :type="settingStore.tabActive"
+      @close="removeTab"
+      @update:value="jumpTo"
+    >
+      <n-tab
+        v-for="item in tabsList"
+        :closable="!item.meta.affix"
+        :key="item.fullPath"
+        :name="item.fullPath"
+        @contextmenu="openMenu($event, item)"
+      >
         <span>{{ item.meta.title }}</span>
       </n-tab>
     </n-tabs>
@@ -169,8 +186,16 @@ const clickoutside = () => {
         </n-icon>
       </n-button>
     </div>
-    <n-dropdown placement="bottom-start" trigger="manual" :show="state.showDropdown" :x="state.x" :y="state.y"
-      :options="options" @select="handleSelect" @clickoutside="clickoutside" />
+    <n-dropdown
+      placement="bottom-start"
+      trigger="manual"
+      :show="state.showDropdown"
+      :x="state.x"
+      :y="state.y"
+      :options="options"
+      @select="handleSelect"
+      @clickoutside="clickoutside"
+    />
   </div>
 </template>
 <style lang="scss" scoped>
