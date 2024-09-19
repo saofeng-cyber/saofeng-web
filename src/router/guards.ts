@@ -54,7 +54,8 @@ export const createRouterGuards = (router: Router) => {
     asyncRouteStore.setMenuOption(routes);
     const redirectPath = (from.query.redirect || to.path) as string;
     const redirect = decodeURIComponent(redirectPath);
-    const nextData = to.path === redirect ? { ...to } : { path: redirect };
+    const nextData =
+      to.path === redirect ? { ...to, replace: true } : { path: redirect };
     asyncRouteStore.setDynamicRouteAdded(true);
     next(nextData);
   });

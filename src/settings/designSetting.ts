@@ -25,25 +25,25 @@ export const tabOptions = [
     label: 'bar',
     value: 'bar'
   },
-  {
-    label: 'line',
-    value: 'line'
-  },
+  // {
+  //   label: 'line',
+  //   value: 'line'
+  // },
   {
     label: 'card',
     value: 'card'
-  },
-  {
-    label: 'segment',
-    value: 'segment'
   }
+  // {
+  //   label: 'segment',
+  //   value: 'segment'
+  // }
 ];
 
 const setting = {
   //深色主题
   darkTheme: false,
   //系统主题色
-  appTheme: '#2d8cf0',
+  appTheme: '#24507E',
   //系统内置主题色列表
   appThemeList,
   tabOptions

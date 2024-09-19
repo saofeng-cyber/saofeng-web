@@ -1,6 +1,10 @@
 <script setup lang="ts">
+import type { DropdownOption } from 'naive-ui';
+import { PageEnum } from '@/enums/pageEnum';
 import { useDesignSettingStore } from '@/store/modules/designSetting';
 import { useTagesViewStore, type RouteItem } from '@/store/modules/tagsView';
+import { renderIcon } from '@/utils/tools';
+import { CloseOutlined, ColumnWidthOutlined, MinusOutlined, ReloadOutlined } from '@vicons/antd';
 const tabsRef = ref();
 const tagesViewStore = useTagesViewStore();
 const settingStore = useDesignSettingStore();
@@ -14,8 +18,13 @@ const getSimpleRoute = (route: any): RouteItem => {
 
 const state = reactive({
   activeKey: route.fullPath,
-  vistedKey: ''
+  vistedKey: '',
+  query: {},
+  showDropdown: false,
+  x: 0,
+  y: 0
 });
+
 const tabsList: any = computed(() => tagesViewStore.tagsViewList);
 const removeTab = (fullPath: string) => {
   if (tabsList.value.length === 1) return;
@@ -37,7 +46,7 @@ watch(
     state.activeKey = newVal;
     tagesViewStore.addTagsView(getSimpleRoute(route));
     nextTick(() => {
-      tabsRef.value?.syncBarPosition();
+      updateTagsView();
     });
   },
   {
@@ -50,82 +59,98 @@ watch(
   () => settingStore.tabActive,
   () => {
     nextTick(() => {
-      tabsRef.value?.syncBarPosition();
+      updateTagsView();
     });
   }
 );
 
-const x = ref(0);
-const y = ref(0);
-const showDropdownRef = ref(false);
 const openMenu = (e: MouseEvent, item: RouteItem) => {
-  console.log('openMenu', e, item);
   options.value[0].disabled = item.fullPath !== state.activeKey;
   options.value[1].disabled = item.meta.affix ?? false;
   options.value[2].disabled = tabsList.value.length === 1;
   options.value[3].disabled = tabsList.value.length === 1;
   state.vistedKey = item.fullPath;
+  state.query = item.query;
   e.preventDefault();
-  showDropdownRef.value = false;
+  state.showDropdown = false;
   nextTick(() => {
-    showDropdownRef.value = true;
-    x.value = e.clientX;
-    y.value = e.clientY;
+    state.showDropdown = true;
+    state.x = e.clientX;
+    state.y = e.clientY;
   });
 };
 
-const options = ref([
+const options = ref<DropdownOption[]>([
   {
     label: '刷新当前标签页',
     key: 'refresh',
-    disabled: false
+    disabled: false,
+    icon: renderIcon(ReloadOutlined),
   },
   {
     label: '关闭当前标签页',
     key: 'closeCurrent',
-    disabled: false
+    disabled: false,
+    icon: renderIcon(CloseOutlined),
   },
   {
     label: '关闭其他标签页',
     key: 'closeOther',
-    disabled: false
+    disabled: false,
+    icon: renderIcon(ColumnWidthOutlined),
   },
   {
     label: '关闭全部标签页',
     key: 'closeAll',
-    disabled: false
+    disabled: false,
+    icon: renderIcon(MinusOutlined),
   }
 ]);
+
+// 刷新页面
+const reloadPage = () => {
+  router.go(0);
+};
+
+// 关闭其他标签页
+const closeOtherTagsView = () => {
+  tagesViewStore.closeOtherTagsView(state.activeKey);
+  router.push(state.activeKey);
+};
+
+// 关闭所有标签页
+const closeAllTagsView = () => {
+  tagesViewStore.closeAllTagsView();
+  router.replace(PageEnum.BASE_HOME);
+};
 
 const handleSelect = (key: string) => {
   switch (key) {
     case 'refresh':
-      router.go(0);
+      reloadPage();
       break;
     case 'closeCurrent':
-      removeTab(state.activeKey);
+      removeTab(route.fullPath);
       break;
     case 'closeOther':
-      if (state.vistedKey === state.activeKey) {
-        tagesViewStore.closeOtherTagsView(state.activeKey);
-      } else {
-        tagesViewStore.closeOtherTagsView(state.vistedKey);
-        router.push(state.vistedKey);
-      }
+      closeOtherTagsView();
       break;
     case 'closeAll':
-      tagesViewStore.closeAllTagsView();
-      router.push('/');
+      closeAllTagsView();
       break;
   }
   nextTick(() => {
-    tabsRef.value?.syncBarPosition();
-    clickoutside();
+    updateTagsView();
   });
 };
 
+const updateTagsView = () => {
+  tabsRef.value?.syncBarPosition();
+  state.showDropdown = false;
+}
+
 const clickoutside = () => {
-  showDropdownRef.value = false;
+  updateTagsView();
 };
 </script>
 <template>
@@ -137,8 +162,15 @@ const clickoutside = () => {
         <span>{{ item.meta.title }}</span>
       </n-tab>
     </n-tabs>
-    <n-dropdown placement="bottom-start" trigger="manual" :show="showDropdownRef" :x="x" :y="y" :options="options"
-      @select="handleSelect" @clickoutside="clickoutside" />
+    <div class="">
+      <n-button circle text @click="reloadPage">
+        <n-icon size="20">
+          <ReloadOutlined />
+        </n-icon>
+      </n-button>
+    </div>
+    <n-dropdown placement="bottom-start" trigger="manual" :show="state.showDropdown" :x="state.x" :y="state.y"
+      :options="options" @select="handleSelect" @clickoutside="clickoutside" />
   </div>
 </template>
 <style lang="scss" scoped>
@@ -151,6 +183,7 @@ const clickoutside = () => {
 }
 
 .tags-views {
+  flex: 1;
   --n-pane-padding-top: 0;
 }
 </style>
