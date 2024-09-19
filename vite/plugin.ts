@@ -14,7 +14,7 @@ export const createPlugins = (
   vitePlugins.push(createAutoComponents());
   vitePlugins.push(createSvgIcon());
   vitePlugins.push(createSetupExtend());
-  vitePlugins.push(configMockPlugin(isBuild));
+  vitePlugins.push(configMockPlugin());
   isBuild && vitePlugins.push(...createCompression(viteEnv));
   return vitePlugins;
 };

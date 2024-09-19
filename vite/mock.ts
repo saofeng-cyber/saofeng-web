@@ -4,10 +4,9 @@
  */
 import { viteMockServe } from 'vite-plugin-mock';
 
-export function configMockPlugin(isBuild: boolean) {
+export function configMockPlugin() {
   return viteMockServe({
-    mockPath: 'mock',
-    enable: true,
-    watchFiles: true
+    mockPath: 'src/mock', // mock文件夹路径
+    enable: true
   });
 }
