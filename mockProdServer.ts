@@ -1,5 +1,4 @@
 import { createProdMockServer } from 'vite-plugin-mock/client';
-import userModule from '@/mock/user'; // 引入mock数据
 
 /**
  * mockjs 语法参考: https://github.com/nuysoft/Mock/wiki/Syntax-Specification
@@ -14,11 +13,15 @@ import userModule from '@/mock/user'; // 引入mock数据
  * mockjs 生成随机标题: https://github.com/nuysoft/Mock/wiki/API#ctitle
  *
  **/
+const mockModules = import.meta.glob('@/mock/*.ts', {
+  eager: true,
+  import: 'default'
+});
 
-// const mockModules = import.meta.glob('./modules/*.ts', {
-//   eager: true,
-//   import: 'default'
-// });
-// console.log(import.meta.glob);
+const mockList: any[] = [];
+Object.values(mockModules).forEach((item) => {
+  mockList.push(item);
+});
+console.log(66, mockList);
 
-export default createProdMockServer([...userModule]);
+export default createProdMockServer(mockList.flat(1));
