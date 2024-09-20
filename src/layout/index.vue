@@ -21,5 +21,6 @@ import AppMain from './content/AppMain.vue';
   height: 100%;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 </style>

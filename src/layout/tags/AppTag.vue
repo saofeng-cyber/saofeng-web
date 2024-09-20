@@ -8,13 +8,18 @@ import {
   CloseOutlined,
   ColumnWidthOutlined,
   MinusOutlined,
-  ReloadOutlined
+  ReloadOutlined,
+  LeftOutlined,
+  RightOutlined
 } from '@vicons/antd';
-const tabsRef = ref();
+import { Refresh } from '@vicons/ionicons5';
+const tabsRef = ref<HTMLElement>();
 const tagesViewStore = useTagesViewStore();
 const settingStore = useDesignSettingStore();
 const route = useRoute();
 const router = useRouter();
+
+const getThemeColor = computed(() => settingStore.appTheme);
 // 获取简易的路由对象
 const getSimpleRoute = (route: any): RouteItem => {
   const { fullPath, hash, meta, name, params, path, query } = route;
@@ -45,29 +50,68 @@ const jumpTo = (path: string) => {
   router.push(path);
 };
 
+// 滚动左边位置
+
+const scrollPre = () => {
+  const containerWidth = tabsRef.value!.offsetWidth;
+  const currentScroll = tabsRef.value!.scrollLeft;
+  if (!currentScroll) return;
+  const scrollLeft = currentScroll > containerWidth ? currentScroll - containerWidth : 0;
+
+  tabsRef.value!.scrollTo({
+    left: scrollLeft,
+    top: 0,
+    behavior: 'smooth'
+  });
+}
+
+// 滚动右边位置
+
+const scrollNext = () => {
+  const containerWidth = tabsRef.value!.offsetWidth;
+  const navWidth = tabsRef.value!.scrollWidth;
+  const currentScroll = tabsRef.value!.scrollLeft;
+
+  if (navWidth - currentScroll <= containerWidth) return;
+  const scrollLeft =
+    navWidth - currentScroll > containerWidth * 2
+      ? currentScroll + containerWidth
+      : navWidth - containerWidth;
+  tabsRef.value!.scrollTo({
+    left: scrollLeft,
+    top: 0,
+    behavior: 'smooth'
+  });
+}
+
+
+// 更新tab滚动位置
+const updateScorllTab = async () => {
+  await nextTick();
+  const containerWidth = tabsRef.value!.offsetWidth;
+  const navWidth = tabsRef.value!.scrollWidth;
+  if (containerWidth < navWidth) {
+    const tagList = tabsRef.value!.querySelectorAll('.tag-scroll-item') || [];
+    [...tagList].forEach((tag: Element) => {
+      if (tag.id === `tag${state.activeKey}`) {
+        tag.scrollIntoView && tag.scrollIntoView();
+      }
+    })
+  }
+}
+
 watch(
   () => route.fullPath,
   (newVal) => {
     state.activeKey = newVal;
     tagesViewStore.addTagsView(getSimpleRoute(route));
-    nextTick(() => {
-      updateTagsView();
-    });
+    updateScorllTab();
   },
   {
-    immediate: true,
-    deep: true
+    immediate: true
   }
 );
 
-watch(
-  () => settingStore.tabActive,
-  () => {
-    nextTick(() => {
-      updateTagsView();
-    });
-  }
-);
 
 const openMenu = (e: MouseEvent, item: RouteItem) => {
   options.value[0].disabled = item.fullPath !== state.activeKey;
@@ -144,71 +188,78 @@ const handleSelect = (key: string) => {
       closeAllTagsView();
       break;
   }
-  nextTick(() => {
-    updateTagsView();
-  });
-};
-
-const updateTagsView = () => {
-  tabsRef.value?.syncBarPosition();
-  state.showDropdown = false;
 };
 
 const clickoutside = () => {
-  updateTagsView();
+  state.showDropdown = false;
 };
 </script>
 <template>
   <div class="tags-contanier">
-    <n-tabs
-      ref="tabsRef"
-      v-model:value="state.activeKey"
-      tab-class="tags-views"
-      size="small"
-      :type="settingStore.tabActive"
-      @close="removeTab"
-      @update:value="jumpTo"
-    >
-      <n-tab
-        v-for="item in tabsList"
-        :closable="!item.meta.affix"
-        :key="item.fullPath"
-        :name="item.fullPath"
-        @contextmenu="openMenu($event, item)"
-      >
-        <span>{{ item.meta.title }}</span>
-      </n-tab>
-    </n-tabs>
-    <div class="">
-      <n-button circle text @click="reloadPage">
-        <n-icon size="20">
-          <ReloadOutlined />
+    <div class="flex overflow-hidden flex-1 h-full items-center">
+      <span class="px-2 cursor-pointer border-r flex items-center h-full hover:bg-slate-50" @click="scrollPre">
+        <n-icon>
+          <LeftOutlined />
         </n-icon>
-      </n-button>
+      </span>
+      <div ref="tabsRef" class="tag-scroll flex flex-1 h-full items-center">
+        <div :id="`tag${item.fullPath}`" class="tag-scroll-item"
+          :class="{ 'active-item': state.activeKey === item.fullPath }" v-for="item in tabsList" :key="item.fullPath"
+          @contextmenu="openMenu($event, item)">
+          <div class="h-full flex items-center px-2" @click="jumpTo(item.fullPath)">
+            {{ item.meta.title }}
+          </div>
+          <n-icon @click="removeTab(item.fullPath)" style="margin-right: 4px;">
+            <CloseOutlined />
+          </n-icon>
+        </div>
+      </div>
+      <span class="px-2 cursor-pointer border-l flex items-center h-full hover:bg-slate-50" @click="scrollNext">
+        <n-icon>
+          <RightOutlined />
+        </n-icon>
+      </span>
     </div>
-    <n-dropdown
-      placement="bottom-start"
-      trigger="manual"
-      :show="state.showDropdown"
-      :x="state.x"
-      :y="state.y"
-      :options="options"
-      @select="handleSelect"
-      @clickoutside="clickoutside"
-    />
+    <div class="flex justify-center items-center h-full">
+      <span class="px-2 cursor-pointer border-l flex items-center h-full hover:bg-slate-50" @click="reloadPage">
+        <n-icon>
+          <Refresh />
+        </n-icon>
+      </span>
+    </div>
+    <n-dropdown placement="bottom-start" trigger="manual" :show="state.showDropdown" :x="state.x" :y="state.y"
+      :options="options" @select="handleSelect" @clickoutside="clickoutside" />
   </div>
 </template>
 <style lang="scss" scoped>
 .tags-contanier {
-  height: 48px;
-  padding: 0 12px;
   display: flex;
   align-items: center;
+  height: 38px;
+  padding: 2px;
+  // padding: 0 12px;
   box-shadow: 0 1px 4px rgb(0 21 41 / 8%);
-}
 
-.tags-views {
-  flex: 1;
-  --n-pane-padding-top: 0;
+  .active-item {
+    background-color: v-bind(getThemeColor) !important;
+    color: #fff !important;
+  }
+
+  .tag-scroll {
+    flex: 1;
+    overflow: hidden;
+  }
+
+  .tag-scroll-item {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin: 0 6px;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    white-space: nowrap;
+    transition: all 0.3s ease-in-out;
+  }
 }
 </style>
