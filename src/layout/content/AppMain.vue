@@ -24,7 +24,7 @@ import Setting from '../setting/index.vue';
 <style lang="scss" scoped>
 .layout-main {
   width: 100%;
-  height: calc(100% - 48px - 64px);
+  height: 100%;
 }
 
 .layout-content-main {
