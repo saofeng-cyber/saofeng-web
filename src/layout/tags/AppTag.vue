@@ -56,14 +56,15 @@ const scrollPre = () => {
   const containerWidth = tabsRef.value!.offsetWidth;
   const currentScroll = tabsRef.value!.scrollLeft;
   if (!currentScroll) return;
-  const scrollLeft = currentScroll > containerWidth ? currentScroll - containerWidth : 0;
+  const scrollLeft =
+    currentScroll > containerWidth ? currentScroll - containerWidth : 0;
 
   tabsRef.value!.scrollTo({
     left: scrollLeft,
     top: 0,
     behavior: 'smooth'
   });
-}
+};
 
 // 滚动右边位置
 
@@ -82,8 +83,7 @@ const scrollNext = () => {
     top: 0,
     behavior: 'smooth'
   });
-}
-
+};
 
 // 更新tab滚动位置
 const updateScorllTab = async () => {
@@ -96,9 +96,9 @@ const updateScorllTab = async () => {
       if (tag.id === `tag${state.activeKey}`) {
         tag.scrollIntoView && tag.scrollIntoView();
       }
-    })
+    });
   }
-}
+};
 
 watch(
   () => route.fullPath,
@@ -111,7 +111,6 @@ watch(
     immediate: true
   }
 );
-
 
 const openMenu = (e: MouseEvent, item: RouteItem) => {
   options.value[0].disabled = item.fullPath !== state.activeKey;
@@ -188,6 +187,7 @@ const handleSelect = (key: string) => {
       closeAllTagsView();
       break;
   }
+  state.showDropdown = false;
 };
 
 const clickoutside = () => {
@@ -197,38 +197,63 @@ const clickoutside = () => {
 <template>
   <div class="tags-contanier">
     <div class="flex overflow-hidden flex-1 h-full items-center">
-      <span class="px-2 cursor-pointer border-r flex items-center h-full hover:bg-slate-50" @click="scrollPre">
+      <span
+        class="px-2 cursor-pointer border-r flex items-center h-full hover:bg-slate-50"
+        @click="scrollPre"
+      >
         <n-icon>
           <LeftOutlined />
         </n-icon>
       </span>
       <div ref="tabsRef" class="tag-scroll flex flex-1 h-full items-center">
-        <div :id="`tag${item.fullPath}`" class="tag-scroll-item"
-          :class="{ 'active-item': state.activeKey === item.fullPath }" v-for="item in tabsList" :key="item.fullPath"
-          @contextmenu="openMenu($event, item)">
-          <div class="h-full flex items-center px-2" @click="jumpTo(item.fullPath)">
+        <div
+          :id="`tag${item.fullPath}`"
+          class="tag-scroll-item"
+          :class="{ 'active-item': state.activeKey === item.fullPath }"
+          v-for="item in tabsList"
+          :key="item.fullPath"
+          @contextmenu="openMenu($event, item)"
+        >
+          <div
+            class="h-full flex items-center px-2"
+            @click="jumpTo(item.fullPath)"
+          >
             {{ item.meta.title }}
           </div>
-          <n-icon @click="removeTab(item.fullPath)" style="margin-right: 4px;">
+          <n-icon @click="removeTab(item.fullPath)" style="margin-right: 4px">
             <CloseOutlined />
           </n-icon>
         </div>
       </div>
-      <span class="px-2 cursor-pointer border-l flex items-center h-full hover:bg-slate-50" @click="scrollNext">
+      <span
+        class="px-2 cursor-pointer border-l flex items-center h-full hover:bg-slate-50"
+        @click="scrollNext"
+      >
         <n-icon>
           <RightOutlined />
         </n-icon>
       </span>
     </div>
     <div class="flex justify-center items-center h-full">
-      <span class="px-2 cursor-pointer border-l flex items-center h-full hover:bg-slate-50" @click="reloadPage">
+      <span
+        class="px-2 cursor-pointer border-l flex items-center h-full hover:bg-slate-50"
+        @click="reloadPage"
+      >
         <n-icon>
           <Refresh />
         </n-icon>
       </span>
     </div>
-    <n-dropdown placement="bottom-start" trigger="manual" :show="state.showDropdown" :x="state.x" :y="state.y"
-      :options="options" @select="handleSelect" @clickoutside="clickoutside" />
+    <n-dropdown
+      placement="bottom-start"
+      trigger="manual"
+      :show="state.showDropdown"
+      :x="state.x"
+      :y="state.y"
+      :options="options"
+      @select="handleSelect"
+      @clickoutside="clickoutside"
+    />
   </div>
 </template>
 <style lang="scss" scoped>
