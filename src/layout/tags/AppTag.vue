@@ -202,17 +202,33 @@ const clickoutside = () => {
 <template>
   <div class="tags-contanier">
     <div class="flex overflow-hidden flex-1 h-full items-center">
-      <span class="px-2 cursor-pointer border-r flex items-center h-full hover:bg-slate-50" @click="scrollPre">
+      <span
+        class="px-2 cursor-pointer border-r flex items-center h-full hover:bg-slate-50"
+        @click="scrollPre"
+      >
         <n-icon>
           <LeftOutlined />
         </n-icon>
       </span>
       <div ref="tabsRef" class="tag-scroll flex flex-1 h-full items-center">
-        <VueDraggable v-model="tabsList" ghostClass="ghost" class="flex" animation="150">
-          <div :id="`tag${item.fullPath}`" class="tag-scroll-item"
-            :class="{ 'active-item': state.activeKey === item.fullPath }" v-for="item in tabsList" :key="item.fullPath"
-            @contextmenu="openMenu($event, item)">
-            <div class="h-full flex items-center px-2" @click="jumpTo(item.fullPath)">
+        <VueDraggable
+          v-model="tabsList"
+          ghostClass="ghost"
+          class="flex"
+          animation="150"
+        >
+          <div
+            :id="`tag${item.fullPath}`"
+            class="tag-scroll-item"
+            :class="{ 'active-item': state.activeKey === item.fullPath }"
+            v-for="item in tabsList"
+            :key="item.fullPath"
+            @contextmenu="openMenu($event, item)"
+          >
+            <div
+              class="h-full flex items-center px-2"
+              @click="jumpTo(item.fullPath)"
+            >
               {{ item.meta.title }}
             </div>
             <n-icon @click="removeTab(item.fullPath)" style="margin-right: 4px">
@@ -221,21 +237,35 @@ const clickoutside = () => {
           </div>
         </VueDraggable>
       </div>
-      <span class="px-2 cursor-pointer border-l flex items-center h-full hover:bg-slate-50" @click="scrollNext">
+      <span
+        class="px-2 cursor-pointer border-l flex items-center h-full hover:bg-slate-50"
+        @click="scrollNext"
+      >
         <n-icon>
           <RightOutlined />
         </n-icon>
       </span>
     </div>
     <div class="flex justify-center items-center h-full">
-      <span class="px-2 cursor-pointer border-l flex items-center h-full hover:bg-slate-50" @click="reloadPage">
+      <span
+        class="px-2 cursor-pointer border-l flex items-center h-full hover:bg-slate-50"
+        @click="reloadPage"
+      >
         <n-icon>
           <Refresh />
         </n-icon>
       </span>
     </div>
-    <n-dropdown placement="bottom-start" trigger="manual" :show="state.showDropdown" :x="state.x" :y="state.y"
-      :options="options" @select="handleSelect" @clickoutside="clickoutside" />
+    <n-dropdown
+      placement="bottom-start"
+      trigger="manual"
+      :show="state.showDropdown"
+      :x="state.x"
+      :y="state.y"
+      :options="options"
+      @select="handleSelect"
+      @clickoutside="clickoutside"
+    />
   </div>
 </template>
 <style lang="scss" scoped>

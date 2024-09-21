@@ -62,8 +62,16 @@ const handleLogin = () => {
         </n-form>
       </n-card> -->
       <h3>Login</h3>
-      <input type="text" v-model="formValue.username" placeholder="请输入用户名" />
-      <input type="password" v-model="formValue.password" placeholder="请输入密码" />
+      <input
+        type="text"
+        v-model="formValue.username"
+        placeholder="请输入用户名"
+      />
+      <input
+        type="password"
+        v-model="formValue.password"
+        placeholder="请输入密码"
+      />
       <button class="logoin_btn" @click="handleLogin">Login</button>
     </div>
   </div>

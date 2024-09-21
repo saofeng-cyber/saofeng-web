@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import { useUserStore } from '@/store/modules/user';
 
-
-const userStore = useUserStore()
+const userStore = useUserStore();
 const loginOut = () => {
-  console.log('loginOut')
+  console.log('loginOut');
   userStore.userLoginout();
-  location.reload()
-}
+  location.reload();
+};
 </script>
 
 <template>

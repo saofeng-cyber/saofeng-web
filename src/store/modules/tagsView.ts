@@ -21,7 +21,7 @@ export const useTagesViewStore = defineStore(
 
     const setTagsViewList = (list: RouteItem[]) => {
       tagsViewList.value = list;
-    }
+    };
     const addTagsView = (view: RouteItem) => {
       const isExists = tagsViewList.value.some(
         (item) => item.fullPath == view.fullPath
