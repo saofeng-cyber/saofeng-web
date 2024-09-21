@@ -2,9 +2,9 @@
   <n-layout class="layout" has-sider position="absolute">
     <AppSide />
     <div class="layout-content">
-      <AppHeader style="flex-shrink: 0" />
-      <AppTag style="flex-shrink: 0" />
-      <AppMain style="flex: 1" />
+      <AppHeader />
+      <AppTag />
+      <AppMain />
     </div>
   </n-layout>
 </template>

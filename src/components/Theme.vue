@@ -1,11 +1,17 @@
 <script setup lang="ts">
-import { useChangeTheme } from '@/hooks/changeTheme';
+import { useUserStore } from '@/store/modules/user';
 
-const { changeTheme, isDark } = useChangeTheme();
+
+const userStore = useUserStore()
+const loginOut = () => {
+  console.log('loginOut')
+  userStore.userLoginout();
+  location.reload()
+}
 </script>
 
 <template>
-  <div class="px-4 cursor-pointer" @click="changeTheme">
-    <SvgIcon :name="isDark ? 'moon' : 'sun'" :width="18" :height="18" />
+  <div class="px-4 cursor-pointer" @click="loginOut">
+    <SvgIcon name="sun" :width="18" :height="18" />
   </div>
 </template>

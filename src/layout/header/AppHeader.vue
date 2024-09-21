@@ -19,7 +19,8 @@ import AppBreadcrumb from './AppBreadcrumb.vue';
 .layout-header {
   width: 100%;
   height: 64px;
-  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  flex-shrink: 0;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
   transition: all 0.2s ease-in-out;
   z-index: 999;
 }

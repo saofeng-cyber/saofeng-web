@@ -25,21 +25,15 @@ const rules = {
 };
 
 const handleLogin = () => {
-  formRef.value?.validate((errors) => {
-    if (!errors) {
-      userStore.userLogin(formValue.value).then(() => {
-        router.push('/');
-      });
-    } else {
-      console.log('验证失败');
-    }
+  userStore.userLogin(formValue.value).then(() => {
+    router.push('/');
   });
 };
 </script>
 <template>
   <div class="login">
-    <div class="w-[400px] h-[300px]">
-      <n-card bordered>
+    <div class="login_container">
+      <!-- <n-card bordered>
         <h3 class="mb-4 text-2xl text-center">登录</h3>
         <n-form
           ref="formRef"
@@ -66,7 +60,11 @@ const handleLogin = () => {
             >
           </n-form-item>
         </n-form>
-      </n-card>
+      </n-card> -->
+      <h3>Login</h3>
+      <input type="text" v-model="formValue.username" placeholder="请输入用户名" />
+      <input type="password" v-model="formValue.password" placeholder="请输入密码" />
+      <button class="logoin_btn" @click="handleLogin">Login</button>
     </div>
   </div>
 </template>
@@ -79,5 +77,65 @@ const handleLogin = () => {
   height: 100vh;
   position: relative;
   z-index: 1;
+  background-image: url('@/assets/images/bg.jpg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+
+  .login_container {
+    width: 480px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 32px;
+    padding: 36px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+
+    h3 {
+      font-size: 32px;
+      font-weight: bold;
+      text-align: center;
+      color: #15253c;
+    }
+
+    .logoin_btn {
+      width: 80%;
+      margin: 0 auto;
+      padding: 12px 0;
+      background-color: #15253c;
+      border: none;
+      border-radius: 48px;
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+      cursor: pointer;
+      margin-top: 20px;
+      color: #fff;
+      box-shadow: 0 0 10px #1f252c;
+      transition: all 0.3s ease-in-out;
+      &:hover {
+        background-color: #1f252c;
+        box-shadow: 0 0 20px #15253c;
+      }
+    }
+
+    input {
+      position: relative;
+      width: 100%;
+      margin-bottom: 20px;
+      padding: 10px;
+      border: none;
+      outline: none;
+      background-color: transparent;
+      border-bottom: 2px solid #15253c;
+      color: #15253c;
+      font-size: 22px;
+      font-weight: bold;
+
+      &::placeholder {
+        color: #f3f3f3;
+      }
+    }
+  }
 }
 </style>
