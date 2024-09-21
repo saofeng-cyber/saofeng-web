@@ -13,6 +13,7 @@ import {
   RightOutlined
 } from '@vicons/antd';
 import { Refresh } from '@vicons/ionicons5';
+import { isSlotEmpty } from 'naive-ui/es/_utils';
 const tabsRef = ref<HTMLElement>();
 const tagesViewStore = useTagesViewStore();
 const settingStore = useDesignSettingStore();
@@ -231,7 +232,7 @@ const clickoutside = () => {
             >
               {{ item.meta.title }}
             </div>
-            <n-icon @click="removeTab(item.fullPath)" style="margin-right: 4px">
+            <n-icon  v-if="!item.meta.affix" @click="removeTab(item.fullPath)" style="margin-right: 4px">
               <CloseOutlined />
             </n-icon>
           </div>
