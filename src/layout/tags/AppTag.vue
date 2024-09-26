@@ -13,7 +13,6 @@ import {
   RightOutlined
 } from '@vicons/antd';
 import { Refresh } from '@vicons/ionicons5';
-import { isSlotEmpty } from 'naive-ui/es/_utils';
 const tabsRef = ref<HTMLElement>();
 const tagesViewStore = useTagesViewStore();
 const settingStore = useDesignSettingStore();
@@ -202,71 +201,41 @@ const clickoutside = () => {
 </script>
 <template>
   <div class="tags-contanier">
-    <div class="flex overflow-hidden flex-1 h-full items-center">
-      <span
-        class="px-2 cursor-pointer border-r flex items-center h-full hover:bg-slate-50"
-        @click="scrollPre"
-      >
+    <div class="flex items-center flex-1 h-full overflow-hidden">
+      <span class="flex items-center h-full px-2 border-r cursor-pointer hover:bg-slate-50" @click="scrollPre">
         <n-icon>
           <LeftOutlined />
         </n-icon>
       </span>
-      <div ref="tabsRef" class="tag-scroll flex flex-1 h-full items-center">
-        <VueDraggable
-          v-model="tabsList"
-          ghostClass="ghost"
-          class="flex"
-          animation="150"
-        >
-          <div
-            :id="`tag${item.fullPath}`"
-            class="tag-scroll-item"
-            :class="{ 'active-item': state.activeKey === item.fullPath }"
-            v-for="item in tabsList"
-            :key="item.fullPath"
-            @contextmenu="openMenu($event, item)"
-          >
-            <div
-              class="h-full flex items-center px-2"
-              @click="jumpTo(item.fullPath)"
-            >
+      <div ref="tabsRef" class="flex items-center flex-1 h-full tag-scroll">
+        <VueDraggable v-model="tabsList" ghostClass="ghost" class="flex" animation="150">
+          <div :id="`tag${item.fullPath}`" class="tag-scroll-item"
+            :class="{ 'active-item': state.activeKey === item.fullPath }" v-for="item in tabsList" :key="item.fullPath"
+            @contextmenu="openMenu($event, item)">
+            <div class="flex items-center h-full px-2 text-sm" @click="jumpTo(item.fullPath)">
               {{ item.meta.title }}
             </div>
-            <n-icon  v-if="!item.meta.affix" @click="removeTab(item.fullPath)" style="margin-right: 4px">
+            <n-icon v-if="!item.meta.affix" @click="removeTab(item.fullPath)" style="margin-right: 4px">
               <CloseOutlined />
             </n-icon>
           </div>
         </VueDraggable>
       </div>
-      <span
-        class="px-2 cursor-pointer border-l flex items-center h-full hover:bg-slate-50"
-        @click="scrollNext"
-      >
+      <span class="flex items-center h-full px-2 border-l cursor-pointer hover:bg-slate-50" @click="scrollNext">
         <n-icon>
           <RightOutlined />
         </n-icon>
       </span>
     </div>
-    <div class="flex justify-center items-center h-full">
-      <span
-        class="px-2 cursor-pointer border-l flex items-center h-full hover:bg-slate-50"
-        @click="reloadPage"
-      >
+    <div class="flex items-center justify-center h-full">
+      <span class="flex items-center h-full px-2 border-l cursor-pointer hover:bg-slate-50" @click="reloadPage">
         <n-icon>
           <Refresh />
         </n-icon>
       </span>
     </div>
-    <n-dropdown
-      placement="bottom-start"
-      trigger="manual"
-      :show="state.showDropdown"
-      :x="state.x"
-      :y="state.y"
-      :options="options"
-      @select="handleSelect"
-      @clickoutside="clickoutside"
-    />
+    <n-dropdown placement="bottom-start" trigger="manual" :show="state.showDropdown" :x="state.x" :y="state.y"
+      :options="options" @select="handleSelect" @clickoutside="clickoutside" />
   </div>
 </template>
 <style lang="scss" scoped>
@@ -299,6 +268,7 @@ const clickoutside = () => {
     align-items: center;
     cursor: pointer;
     margin: 0 6px;
+    padding: 4px;
     border: 1px solid #e5e7eb;
     border-radius: 6px;
     white-space: nowrap;
