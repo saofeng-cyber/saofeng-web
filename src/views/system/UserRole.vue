@@ -79,12 +79,7 @@ const tableData = ref([
 </script>
 <template>
   <div class="user_role">
-    <CustomTable
-      title="用户角色"
-      titleTooltip="用户角色"
-      :columns="tableColumns"
-      :data="tableData"
-    />
+    <CustomTable title="用户角色" titleTooltip="用户角色" :columns="tableColumns" :data="tableData" />
   </div>
 </template>
 <style lang="scss" scoped>

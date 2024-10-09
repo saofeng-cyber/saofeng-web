@@ -8,7 +8,7 @@ import { createPlugins } from './vite/plugin';
 export default defineConfig(({ mode, command }) => {
   const env = loadEnv(mode, process.cwd() + '/env');
   const { VITE_BASE_URL, VITE_OUTPUT_DIR } = env;
-  console.log(env);
+  // console.log(env);
 
   return {
     base: VITE_BASE_URL,

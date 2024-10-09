@@ -7,8 +7,14 @@ export function createAutoImport() {
       'vue-router',
       'pinia',
       {
-        'naive-ui': ['useDialog', 'useMessage', 'useNotification', 'useLoadingBar']
-      }
+        'naive-ui': [
+          'useDialog',
+          'useMessage',
+          'useNotification',
+          'useLoadingBar'
+        ]
+      },
+      '@vueuse/core'
     ],
     dts: 'src/typings/auto-imports.d.ts'
   });

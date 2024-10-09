@@ -4,7 +4,6 @@ import {
   ReloadOutlined,
   ColumnHeightOutlined
 } from '@vicons/antd';
-import { useCustomTable } from './hooks/useTable';
 import type { TableColumn } from 'naive-ui/es/data-table/src/interface';
 import { createTableContext } from './hooks/useTableContext';
 defineProps({
@@ -27,9 +26,11 @@ defineProps({
 });
 
 const isStriped = ref(false);
+
 const setStriped = (value: boolean) => {
   isStriped.value = value;
 };
+
 const reload = () => {
   console.log('reload');
 };
@@ -57,7 +58,12 @@ const tableSize = ref('medium');
 const densitySelect = (key: string) => {
   tableSize.value = key;
 };
-createTableContext();
+
+const tableRef = ref(null);
+
+onMounted(() => {
+  createTableContext(tableRef.value!);
+});
 </script>
 <template>
   <div class="custom-table">
@@ -109,12 +115,7 @@ createTableContext();
         <n-tooltip trigger="hover">
           <template #trigger>
             <div class="table-toolbar-right-icon">
-              <n-dropdown
-                @select="densitySelect"
-                trigger="click"
-                :options="densityOptions"
-                v-model:value="tableSize"
-              >
+              <n-dropdown @select="densitySelect" trigger="click" :options="densityOptions" v-model:value="tableSize">
                 <n-icon size="18">
                   <ColumnHeightOutlined />
                 </n-icon>
@@ -123,16 +124,13 @@ createTableContext();
           </template>
           <span>密度</span>
         </n-tooltip>
+
+        <ColumnSetting />
       </div>
     </div>
     <div class="s-table">
-      <n-data-table
-        ref="tableRef"
-        :columns="columns"
-        :data="data"
-        :striped="isStriped"
-        :size="tableSize"
-      ></n-data-table>
+      <n-data-table ref="tableRef" :columns="columns" :data="data" :striped="isStriped"
+        :size="tableSize"></n-data-table>
     </div>
   </div>
 </template>

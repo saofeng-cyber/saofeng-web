@@ -1,7 +1,9 @@
-export const useCustomTable = (table: any) => {
+import type { BasicTableProps } from '../types/table';
+
+export const useCustomTable = (propsRef: ComputedRef<BasicTableProps>) => {
   const getTableColumns = () => {
-    console.log(table);
-    return table.columns;
+    console.log(propsRef.value);
+    return propsRef.value.columns;
   };
 
   return {

@@ -1,29 +1,33 @@
 <template>
-  <n-layout-sider
-    class="layout-sider"
-    :collapsed="collapsed"
-    collapse-mode="width"
-    :collapsed-width="64"
-    :width="sideWidth"
-    show-trigger
-    :native-scrollbar="false"
-    @update:collapsed="onUpdateCollapsed"
-  >
+  <n-layout-sider v-if="device" class="layout-sider" :collapsed="collapsed" collapse-mode="width" :collapsed-width="64"
+    :width="sideWidth" show-trigger :native-scrollbar="false" @update:collapsed="onUpdateCollapsed">
     <Logo :isCollapsed="collapsed" />
     <AppMenu :collapsed="collapsed" />
   </n-layout-sider>
+  <n-drawer v-else v-model:show="collapsed" :trap-focus="false" placement="left" :native-scrollbar="false">
+    <Logo />
+    <AppMenu />
+  </n-drawer>
 </template>
 
 <script lang="ts" setup>
 import AppMenu from './menu/AppMenu.vue';
 import Logo from '@/components/Logo.vue';
 import { useDesignSettingStore } from '@/store/modules/designSetting';
-
 const designSettingStore = useDesignSettingStore();
-const { collapsed, sideWidth } = storeToRefs(designSettingStore);
+const { collapsed, sideWidth, device, deviceWidth } = storeToRefs(designSettingStore);
 const onUpdateCollapsed = () => {
   designSettingStore.setCollapsed(!collapsed.value);
 };
+useResizeObserver(document.body, (entries) => {
+  const entry = entries[0];
+  const { width } = entry.contentRect;
+  if (width > 0 && width < deviceWidth.value) {
+    designSettingStore.setDevice(false);
+  } else {
+    designSettingStore.setDevice(true);
+  }
+});
 </script>
 <style lang="scss">
 .layout-sider {
