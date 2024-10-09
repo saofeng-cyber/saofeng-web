@@ -1,10 +1,25 @@
 <template>
-  <n-layout-sider v-if="device" class="layout-sider" :collapsed="collapsed" collapse-mode="width" :collapsed-width="64"
-    :width="sideWidth" show-trigger :native-scrollbar="false" @update:collapsed="onUpdateCollapsed">
+  <n-layout-sider
+    v-if="device"
+    class="layout-sider"
+    :collapsed="collapsed"
+    collapse-mode="width"
+    :collapsed-width="64"
+    :width="sideWidth"
+    show-trigger
+    :native-scrollbar="false"
+    @update:collapsed="onUpdateCollapsed"
+  >
     <Logo :isCollapsed="collapsed" />
     <AppMenu :collapsed="collapsed" />
   </n-layout-sider>
-  <n-drawer v-else v-model:show="collapsed" :trap-focus="false" placement="left" :native-scrollbar="false">
+  <n-drawer
+    v-else
+    v-model:show="collapsed"
+    :trap-focus="false"
+    placement="left"
+    :native-scrollbar="false"
+  >
     <Logo />
     <AppMenu />
   </n-drawer>
@@ -15,7 +30,8 @@ import AppMenu from './menu/AppMenu.vue';
 import Logo from '@/components/Logo.vue';
 import { useDesignSettingStore } from '@/store/modules/designSetting';
 const designSettingStore = useDesignSettingStore();
-const { collapsed, sideWidth, device, deviceWidth } = storeToRefs(designSettingStore);
+const { collapsed, sideWidth, device, deviceWidth } =
+  storeToRefs(designSettingStore);
 const onUpdateCollapsed = () => {
   designSettingStore.setCollapsed(!collapsed.value);
 };

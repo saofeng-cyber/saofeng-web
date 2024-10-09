@@ -1,6 +1,14 @@
 <template>
-  <n-menu :value="route.name" :collapsed="collapsed" :collapsed-width="64" :indent="24" accordion
-    :collapsed-icon-size="22" :options="menuOptions" @update:value="clickMenuItem" />
+  <n-menu
+    :value="route.name"
+    :collapsed="collapsed"
+    :collapsed-width="64"
+    :indent="24"
+    accordion
+    :collapsed-icon-size="22"
+    :options="menuOptions"
+    @update:value="clickMenuItem"
+  />
 </template>
 
 <script lang="ts" setup>
@@ -11,12 +19,12 @@ const asyncRouteStore = useAsyncRouteStore();
 const route = useRoute();
 const router = useRouter();
 interface Props {
-  collapsed?: boolean
+  collapsed?: boolean;
 }
 
 withDefaults(defineProps<Props>(), {
   collapsed: false
-})
+});
 // 递归生成菜单
 const createMenu = (routes: RouteRecordRaw[]): MenuOption[] => {
   const menuList = routes.map((item: RouteRecordRaw) => {
