@@ -1,7 +1,6 @@
-import type { RouteRecordRaw } from 'vue-router';
-import Layout from '@/layout/index.vue';
 import { renderIcon } from '@/utils/tools';
 import { DashboardOutlined } from '@vicons/antd';
+import type { RouteCustom } from '@/typings/route';
 
 const routeName = 'dashboard';
 
@@ -16,12 +15,12 @@ const routeName = 'dashboard';
  * @param meta.sort 排序越小越排前
  **/
 
-const routes: Array<RouteRecordRaw> = [
+const routes: Array<RouteCustom.RouteRaw> = [
   {
     path: '/dashboard',
     name: routeName,
     redirect: '/dashboard/console',
-    component: Layout,
+    component: 'layout',
     meta: {
       title: '数据分析',
       icon: renderIcon(DashboardOutlined),

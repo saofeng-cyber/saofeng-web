@@ -1,19 +1,16 @@
-import type { RouteRecordRaw } from 'vue-router';
-import Layout from '@/layout/index.vue';
 import { ProjectOutlined } from '@vicons/antd';
 import { renderIcon } from '@/utils/tools';
+import type { RouteCustom } from '@/typings/route';
 
-const routes: Array<RouteRecordRaw> = [
+const routes: Array<RouteCustom.RouteRaw> = [
   {
     path: '/about',
     name: 'about',
-    component: Layout,
+    component: 'layout',
     redirect: '/about/index',
     meta: {
       title: '关于',
       sort: 3,
-      isRoot: true,
-      activeMenu: 'about_index',
       icon: renderIcon(ProjectOutlined),
       roles: ['admin']
     },

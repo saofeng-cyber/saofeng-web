@@ -1,11 +1,9 @@
 import { createDiscreteApi } from 'naive-ui';
 export const useDiscteate = defineStore('discteate', () => {
-  const api = createDiscreteApi(['message', 'notification']);
-  const useMsg = (
-    content: string,
-    type: 'success' | 'error' | 'info' | 'warning'
-  ) => {
-    api.message[type](content);
-  };
-  return { useMsg };
+  const { message, notification, loadingBar } = createDiscreteApi([
+    'message',
+    'notification',
+    'loadingBar'
+  ]);
+  return { message, notification, loadingBar };
 });

@@ -8,6 +8,7 @@ export interface RouteItem {
     title: string;
     icon: string;
     affix: boolean;
+    hideBreadcrumb: boolean;
   };
   query: object;
 }
@@ -26,7 +27,7 @@ export const useTagesViewStore = defineStore(
       const isExists = tagsViewList.value.some(
         (item) => item.fullPath == view.fullPath
       );
-      if (!isExists) {
+      if (!isExists && !view.meta.hideBreadcrumb) {
         tagsViewList.value.push(view);
       }
       return true;

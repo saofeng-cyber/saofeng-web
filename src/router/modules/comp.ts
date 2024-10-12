@@ -1,7 +1,6 @@
-import type { RouteRecordRaw } from 'vue-router';
-import Layout from '@/layout/index.vue';
 import { WalletOutlined } from '@vicons/antd';
 import { renderIcon } from '@/utils/tools';
+import type { RouteCustom } from '@/typings/route';
 
 const routeName = 'comp';
 
@@ -17,11 +16,11 @@ const routeName = 'comp';
  *
  **/
 
-const routes: Array<RouteRecordRaw> = [
+const routes: Array<RouteCustom.RouteRaw> = [
   {
     path: '/comp',
     name: routeName,
-    component: Layout,
+    component: 'layout',
     redirect: '/comp/table',
     meta: {
       title: '组件示例',
@@ -54,6 +53,15 @@ const routes: Array<RouteRecordRaw> = [
           sort: 2
         },
         component: () => import('@/views/components/drag/index.vue')
+      },
+      {
+        path: 'mind',
+        name: `Dind`,
+        meta: {
+          title: '思维的导图',
+          sort: 3
+        },
+        component: () => import('@/views/components/mind/index.vue')
       }
     ]
   }

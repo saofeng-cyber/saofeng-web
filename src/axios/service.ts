@@ -18,9 +18,9 @@ service.interceptors.request.use((config: InternalAxiosRequestConfig) => {
     return config;
   }
   const token = getToken();
-  const { useMsg } = useDiscteate();
+  const { message } = useDiscteate();
   if (!token) {
-    useMsg('token不存在或已失效，请重新登录', 'error');
+    message.error('token不存在或已失效，请重新登录');
     return Promise.reject('token不存在或已失效，请重新登录');
   }
   config.headers['Authorization'] = 'Bearer ' + token;

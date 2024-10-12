@@ -48,11 +48,45 @@ export const HomeRoute: RouteRecordRaw = {
   redirect: '/dashboard'
 };
 
+export const BlackRoute: RouteRecordRaw = {
+  path: 'redirect',
+  name: 'Redirect',
+  component: () => import('@/views/redirect/index.vue')
+};
+
+export const errorRoute: RouteRecordRaw[] = [
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'ErrorPage',
+    component: () => import('@/layout/index.vue'),
+    redirect: '/404',
+    meta: {
+      hideBreadcrumb: true,
+      title: 'ErrorPage'
+    },
+    children: [
+      {
+        path: '/:path(.*)*',
+        name: 'ErrorPageSon',
+        component: () => import('@/views/error/index.vue'),
+        meta: {
+          title: 'ErrorPageSon',
+          hideBreadcrumb: true
+        }
+      }
+    ]
+  }
+];
+
 //需要验证权限
 export const asyncRoutes = [...routeModuleList];
 
 //普通路由 无需验证权限
-export const constantRouter: RouteRecordRaw[] = [LoginRoute, HomeRoute];
+export const constantRouter: RouteRecordRaw[] = [
+  LoginRoute,
+  HomeRoute,
+  ...errorRoute
+];
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

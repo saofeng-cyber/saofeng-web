@@ -18,5 +18,5 @@ usePinia(app);
 createRouterGuards(router);
 app.use(router);
 app.use(VueSweetalert2);
-app.component('VueDraggable', VueDraggable);
+app.component('Draggable', VueDraggable);
 app.mount('#app');

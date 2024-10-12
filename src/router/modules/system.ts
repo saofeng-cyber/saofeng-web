@@ -1,19 +1,16 @@
-import type { RouteRecordRaw } from 'vue-router';
-import Layout from '@/layout/index.vue';
 import { SettingOutlined } from '@vicons/antd';
 import { renderIcon } from '@/utils/tools';
+import type { RouteCustom } from '@/typings/route';
 
-const routes: Array<RouteRecordRaw> = [
+const routes: Array<RouteCustom.RouteRaw> = [
   {
     path: '/system',
     name: 'system',
-    component: Layout,
+    component: 'layout',
     redirect: '/system/index',
     meta: {
       title: '系统管理',
       sort: 3,
-      isRoot: true,
-      activeMenu: 'system_index',
       icon: renderIcon(SettingOutlined)
     },
     children: [

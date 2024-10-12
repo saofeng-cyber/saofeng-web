@@ -5,16 +5,16 @@ const key = Symbol('s-table');
 
 type Instance = {
   wrapRef: Ref<Nullable<HTMLElement>>;
-  getBindValues: ComputedRef<Recordable>;
+  // getBindValues: ComputedRef<Recordable>;
 };
 
-type RetInstance = Omit<Instance, 'getBindValues'> & {
-  getBindValues: ComputedRef<BasicTableProps>;
-};
+// type RetInstance = Omit<Instance, 'getBindValues'> & {
+//   getBindValues: ComputedRef<BasicTableProps>;
+// };
 export function createTableContext(instance: Instance) {
   provide(key, instance);
 }
 
-export function useTableContext(): RetInstance {
-  return inject(key) as RetInstance;
+export function useTableContext() {
+  return inject(key);
 }
