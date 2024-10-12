@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import {
-  SettingsOutline as SettingsIcon,
-} from '@vicons/ionicons5';
+import { SettingsOutline as SettingsIcon } from '@vicons/ionicons5';
 import { useTableContext } from './hooks/useTableContext';
 const table: any = useTableContext();
 console.log(table);
@@ -9,7 +7,7 @@ const state = reactive({
   selection: false,
   checkAll: true,
   checkList: [],
-  defaultCheckList: [],
+  defaultCheckList: []
 });
 
 const onCheckAll = (e: boolean) => {
@@ -29,7 +27,12 @@ const resetColumns = () => {
 };
 </script>
 <template>
-  <n-popover trigger="click" :width="230" class="toolbar-popover" placement="bottom-end">
+  <n-popover
+    trigger="click"
+    :width="230"
+    class="toolbar-popover"
+    placement="bottom-end"
+  >
     <template #trigger>
       <n-icon class="ml-3 cursor-pointer" size="18">
         <SettingsIcon />
@@ -38,9 +41,24 @@ const resetColumns = () => {
     <template #header>
       <div class="table-toolbar-inner-popover-title">
         <n-space>
-          <n-checkbox v-model:checked="state.checkAll" @update:checked="onCheckAll">列展示</n-checkbox>
-          <n-checkbox v-model:checked="state.selection" @update:checked="onSelection">勾选列</n-checkbox>
-          <n-button text type="info" size="small" class="mt-1" @click="resetColumns">重置</n-button>
+          <n-checkbox
+            v-model:checked="state.checkAll"
+            @update:checked="onCheckAll"
+            >列展示</n-checkbox
+          >
+          <n-checkbox
+            v-model:checked="state.selection"
+            @update:checked="onSelection"
+            >勾选列</n-checkbox
+          >
+          <n-button
+            text
+            type="info"
+            size="small"
+            class="mt-1"
+            @click="resetColumns"
+            >重置</n-button
+          >
         </n-space>
       </div>
     </template>

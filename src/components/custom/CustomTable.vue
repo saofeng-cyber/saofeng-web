@@ -63,7 +63,7 @@ const tableRef = ref(null);
 onMounted(() => {
   console.log('tableRef', tableRef.value);
   createTableContext(tableRef.value!);
-})
+});
 </script>
 <template>
   <div class="custom-table">
@@ -115,7 +115,12 @@ onMounted(() => {
         <n-tooltip trigger="hover">
           <template #trigger>
             <div class="table-toolbar-right-icon">
-              <n-dropdown @select="densitySelect" trigger="click" :options="densityOptions" v-model:value="tableSize">
+              <n-dropdown
+                @select="densitySelect"
+                trigger="click"
+                :options="densityOptions"
+                v-model:value="tableSize"
+              >
                 <n-icon size="18">
                   <ColumnHeightOutlined />
                 </n-icon>
@@ -129,8 +134,13 @@ onMounted(() => {
       </div>
     </div>
     <div class="s-table">
-      <n-data-table ref="tableRef" :columns="columns" :data="data" :striped="isStriped"
-        :size="tableSize"></n-data-table>
+      <n-data-table
+        ref="tableRef"
+        :columns="columns"
+        :data="data"
+        :striped="isStriped"
+        :size="tableSize"
+      ></n-data-table>
     </div>
   </div>
 </template>
