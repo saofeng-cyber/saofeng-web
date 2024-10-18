@@ -15,48 +15,53 @@ const onSlideChange = () => {
 };
 const modules = [Navigation, Pagination, EffectFade];
 
-const swiperList = ref(
-  [
-    {
-      url: 'https://swiperjs.com/demos/images/nature-1.jpg',
-      title: 'Slide 1',
-    },
-    {
-      url: 'https://swiperjs.com/demos/images/nature-2.jpg',
-      title: 'Slide 2',
-    },
-    {
-      url: 'https://swiperjs.com/demos/images/nature-3.jpg',
-      title: 'Slide 3',
-    },
-    {
-      url: 'https://swiperjs.com/demos/images/nature-4.jpg',
-      title: 'Slide 4',
-    },
-    {
-      url: 'https://swiperjs.com/demos/images/nature-5.jpg',
-      title: 'Slide 5',
-    },
-    {
-      url: 'https://swiperjs.com/demos/images/nature-6.jpg',
-      title: 'Slide 6',
-    },
-    {
-      url: 'https://swiperjs.com/demos/images/nature-7.jpg',
-      title: 'Slide 7',
-    },
-    {
-      url: 'https://swiperjs.com/demos/images/nature-8.jpg',
-      title: 'Slide 8',
-    },
-  ]
-)
+const swiperList = ref([
+  {
+    url: 'https://swiperjs.com/demos/images/nature-1.jpg',
+    title: 'Slide 1'
+  },
+  {
+    url: 'https://swiperjs.com/demos/images/nature-2.jpg',
+    title: 'Slide 2'
+  },
+  {
+    url: 'https://swiperjs.com/demos/images/nature-3.jpg',
+    title: 'Slide 3'
+  },
+  {
+    url: 'https://swiperjs.com/demos/images/nature-4.jpg',
+    title: 'Slide 4'
+  },
+  {
+    url: 'https://swiperjs.com/demos/images/nature-5.jpg',
+    title: 'Slide 5'
+  },
+  {
+    url: 'https://swiperjs.com/demos/images/nature-6.jpg',
+    title: 'Slide 6'
+  },
+  {
+    url: 'https://swiperjs.com/demos/images/nature-7.jpg',
+    title: 'Slide 7'
+  },
+  {
+    url: 'https://swiperjs.com/demos/images/nature-8.jpg',
+    title: 'Slide 8'
+  }
+]);
 </script>
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
-      <swiper :modules="modules" :slides-per-view="3" :space-between="25" navigation :pagination="{ clickable: true }"
-        @swiper="onSwiper" @slideChange="onSlideChange">
+      <swiper
+        :modules="modules"
+        :slides-per-view="3"
+        :space-between="25"
+        navigation
+        :pagination="{ clickable: true }"
+        @swiper="onSwiper"
+        @slideChange="onSlideChange"
+      >
         <swiper-slide v-for="item in swiperList" :key="item.title">
           <img :src="item.url" alt="" />
         </swiper-slide>

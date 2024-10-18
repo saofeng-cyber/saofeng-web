@@ -2,9 +2,7 @@
 import { ref } from 'vue';
 import { dropOrSwap } from '@formkit/drag-and-drop';
 import { useDragAndDrop } from '@formkit/drag-and-drop/vue';
-import {
-  animations
-} from "@formkit/drag-and-drop";
+import { animations } from '@formkit/drag-and-drop';
 
 const todoItems = [
   'Schedule perm',
@@ -56,7 +54,10 @@ function toggleDoneSwap() {
       </li>
     </ul>
     <div>
-      <button @click="toggleTodoSwap()" class="px-4 py-2 mt-4 font-bold text-white bg-indigo-500 rounded-lg">
+      <button
+        @click="toggleTodoSwap()"
+        class="px-4 py-2 mt-4 font-bold text-white bg-indigo-500 rounded-lg"
+      >
         Toggle {{ todoShouldSwap ? 'Drop' : 'Swap' }}
       </button>
     </div>
@@ -66,7 +67,10 @@ function toggleDoneSwap() {
       </li>
     </ul>
     <div>
-      <button @click="toggleDoneSwap()" class="px-4 py-2 mt-4 font-bold text-white bg-indigo-500 rounded-lg">
+      <button
+        @click="toggleDoneSwap()"
+        class="px-4 py-2 mt-4 font-bold text-white bg-indigo-500 rounded-lg"
+      >
         Toggle {{ doneShouldSwap ? 'Drop' : 'Swap' }}
       </button>
     </div>
