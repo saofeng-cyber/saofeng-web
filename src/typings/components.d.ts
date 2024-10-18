@@ -11,6 +11,7 @@ declare module 'vue' {
     Collapsed: typeof import('./../components/Collapsed.vue')['default']
     ColumnSetting: typeof import('./../components/custom/ColumnSetting.vue')['default']
     CustomTable: typeof import('./../components/custom/CustomTable.vue')['default']
+    DataUi: typeof import('./../components/DataUi.vue')['default']
     DropdownColumn: typeof import('./../components/custom/DropdownColumn.vue')['default']
     Dropzone: typeof import('./../components/Dropzone.vue')['default']
     FullCalendar: typeof import('./../components/FullCalendar.vue')['default']

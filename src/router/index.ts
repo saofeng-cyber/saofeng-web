@@ -62,15 +62,15 @@ export const errorRoute: RouteRecordRaw[] = [
     redirect: '/404',
     meta: {
       hideBreadcrumb: true,
-      title: 'ErrorPage'
+      title: '错误页面'
     },
     children: [
       {
-        path: '/:path(.*)*',
+        path: '/:pathMatch(.*)*',
         name: 'ErrorPageSon',
         component: () => import('@/views/error/index.vue'),
         meta: {
-          title: 'ErrorPageSon',
+          title: '404',
           hideBreadcrumb: true
         }
       }

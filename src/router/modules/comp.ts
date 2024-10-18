@@ -25,7 +25,7 @@ const routes: Array<RouteCustom.RouteRaw> = [
     meta: {
       title: '组件示例',
       icon: renderIcon(WalletOutlined),
-      sort: 2
+      sort: 1
     },
     children: [
       {
@@ -42,7 +42,7 @@ const routes: Array<RouteCustom.RouteRaw> = [
         component: () => import('@/views/components/form/index.vue'),
         meta: {
           title: '表单',
-          sort: 3
+          sort: 2
         }
       },
       {
@@ -50,7 +50,7 @@ const routes: Array<RouteCustom.RouteRaw> = [
         name: `Drag`,
         meta: {
           title: '拖拽',
-          sort: 2
+          sort: 3
         },
         component: () => import('@/views/components/drag/index.vue')
       },
@@ -59,9 +59,18 @@ const routes: Array<RouteCustom.RouteRaw> = [
         name: `Dind`,
         meta: {
           title: '思维的导图',
-          sort: 3
+          sort: 4
         },
         component: () => import('@/views/components/mind/index.vue')
+      },
+      {
+        path: 'swiper',
+        name: `Swiper`,
+        meta: {
+          title: 'swiper轮播图',
+          sort: 5
+        },
+        component: () => import('@/views/components/swiper/index.vue')
       }
     ]
   }

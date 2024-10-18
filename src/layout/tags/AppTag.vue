@@ -41,6 +41,7 @@ const tabsList: any = computed({
     tagesViewStore.setTagsViewList(val);
   }
 });
+
 const removeTab = (fullPath: string) => {
   if (tabsList.value.length === 1) return;
   tagesViewStore.removeTagsView(fullPath);

@@ -1,33 +1,48 @@
 <script setup lang="ts">
-import type { FormInst } from 'naive-ui';
+import VuePuzzleVcode from 'vue3-puzzle-vcode';
+// import type { FormInst } from 'naive-ui';
 import { useUserStore } from '@/store/modules/user';
 
 const router = useRouter();
 
 const userStore = useUserStore();
+const isShow = ref(false);
+const isSuccess = ref(false);
 
-const formRef = ref<FormInst | null>(null);
+// const formRef = ref<FormInst | null>(null);
 const formValue = ref({
   username: 'admin',
   password: '123456'
 });
-const rules = {
-  username: {
-    required: true,
-    message: '请输入姓名',
-    trigger: 'blur'
-  },
-  password: {
-    required: true,
-    message: '请输入密码',
-    trigger: ['blur']
-  }
+// const rules = {
+//   username: {
+//     required: true,
+//     message: '请输入姓名',
+//     trigger: 'blur'
+//   },
+//   password: {
+//     required: true,
+//     message: '请输入密码',
+//     trigger: ['blur']
+//   }
+// };
+
+const onSuccess = () => {
+  isShow.value = false;
+  isSuccess.value = true;
+};
+const onClose = () => {
+  isShow.value = false;
+  isSuccess.value = false;
 };
 
 const handleLogin = () => {
-  userStore.userLogin(formValue.value).then(() => {
-    router.push('/');
-  });
+  if (isSuccess.value) {
+    userStore.userLogin(formValue.value).then(() => {
+      router.push('/');
+    });
+  }
+  isShow.value = true;
 };
 </script>
 <template>
@@ -73,6 +88,7 @@ const handleLogin = () => {
         placeholder="请输入密码"
       />
       <button class="logoin_btn" @click="handleLogin">Login</button>
+      <VuePuzzleVcode :show="isShow" @success="onSuccess" @close="onClose" />
     </div>
   </div>
 </template>
@@ -85,9 +101,9 @@ const handleLogin = () => {
   height: 100vh;
   position: relative;
   z-index: 1;
-  background-image: url('@/assets/images/bg.jpg');
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
+  // background-image: url('@/assets/images/bg1.jpg');
+  // background-size: cover;
+  // background-repeat: no-repeat;
 
   .login_container {
     width: 480px;
@@ -119,11 +135,12 @@ const handleLogin = () => {
       cursor: pointer;
       margin-top: 20px;
       color: #fff;
-      box-shadow: 0 0 10px #1f252c;
+      box-shadow: 0 0 10px #661b0b1a;
       transition: all 0.3s ease-in-out;
+
       &:hover {
-        background-color: #1f252c;
-        box-shadow: 0 0 20px #15253c;
+        background-color: #661b0b1a;
+        box-shadow: 0 0 20px #661b0b1a;
       }
     }
 

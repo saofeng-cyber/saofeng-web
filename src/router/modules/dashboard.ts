@@ -24,7 +24,7 @@ const routes: Array<RouteCustom.RouteRaw> = [
     meta: {
       title: '数据分析',
       icon: renderIcon(DashboardOutlined),
-      sort: 1
+      sort: 0
     },
     children: [
       {
