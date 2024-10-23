@@ -43,6 +43,7 @@ export default defineConfig(({ mode, command }) => {
             return `assets/${chunkInfo.name}.[hash].[ext]`;
           }
         }
+        // external: ['vue', 'vue-router', 'pinia', 'axios', '@vueuse/core']
       }
     }
   };

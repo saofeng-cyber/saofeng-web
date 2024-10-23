@@ -8,6 +8,7 @@ import { configMockPlugin } from './mock';
 import inspector from 'vite-plugin-dev-inspector';
 import { VitePWA } from 'vite-plugin-pwa';
 import { PluginOption } from 'vite';
+import importToCDN from 'vite-plugin-cdn-import';
 export const createPlugins = (
   viteEnv: Record<string, any>,
   isBuild = false
@@ -43,6 +44,17 @@ export const createPlugins = (
         globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
         runtimeCaching: []
       }
+    })
+  );
+  vitePlugins.push(
+    importToCDN({
+      modules: [
+        {
+          name: 'element-plus',
+          var: 'ElementPlus',
+          path: 'https://unpkg.com/element-plus/lib/index.js'
+        }
+      ]
     })
   );
   isBuild && vitePlugins.push(...createCompression(viteEnv));
