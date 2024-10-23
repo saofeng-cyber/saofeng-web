@@ -31,7 +31,7 @@ export const createRouterGuards = (router: Router) => {
       const redirect = decodeURIComponent(redirectPath);
       const nextData =
         to.path === redirect
-          ? { path: to.fullPath, replace: true }
+          ? { path: to.path, replace: true }
           : { path: redirect };
       asyncRouteStore.setDynamicRouteAdded(true);
       next(nextData);

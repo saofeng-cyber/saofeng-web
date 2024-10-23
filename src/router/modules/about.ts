@@ -23,6 +23,15 @@ const routes: Array<RouteCustom.RouteRaw> = [
           title: '关于',
           hidden: false
         }
+      },
+      {
+        path: 'resum',
+        name: `resum_index`,
+        component: () => import('@/views/resum/index.vue'),
+        meta: {
+          title: '问题',
+          hidden: false
+        }
       }
     ]
   }

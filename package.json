@@ -30,6 +30,7 @@
     "dropzone": "6.0.0-beta.2",
     "file-saver": "^2.0.5",
     "jsencrypt": "^3.3.2",
+    "leafer-ui": "^1.0.6",
     "mitt": "^3.0.1",
     "mockjs": "^1.1.0",
     "nprogress": "^0.2.0",
@@ -53,6 +54,7 @@
     "@commitlint/config-conventional": "^19.4.1",
     "@endemolshinegroup/cz-github": "^2.0.0",
     "@rushstack/eslint-patch": "^1.8.0",
+    "@tailwindcss/typography": "^0.5.15",
     "@tsconfig/node20": "^20.1.4",
     "@types/dropzone": "^5.7.8",
     "@types/file-saver": "^2.0.7",
@@ -87,6 +89,7 @@
     "vite-plugin-compression": "^0.5.1",
     "vite-plugin-dev-inspector": "^2.2.7",
     "vite-plugin-mock": "^3.0.2",
+    "vite-plugin-pwa": "^0.20.5",
     "vite-plugin-svg-icons": "^2.0.1",
     "vite-plugin-vue-setup-extend": "^0.4.0",
     "vue-tsc": "^2.0.21"

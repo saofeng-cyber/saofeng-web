@@ -18,6 +18,7 @@ const tagesViewStore = useTagesViewStore();
 const settingStore = useDesignSettingStore();
 const route = useRoute();
 const router = useRouter();
+const showNavgition = ref(false);
 
 const getThemeColor = computed(() => settingStore.appTheme);
 // 获取简易的路由对象
@@ -97,12 +98,15 @@ const updateScorllTab = async () => {
   const containerWidth = tabsRef.value!.offsetWidth;
   const navWidth = tabsRef.value!.scrollWidth;
   if (containerWidth < navWidth) {
+    showNavgition.value = true;
     const tagList = tabsRef.value!.querySelectorAll('.tag-scroll-item') || [];
     [...tagList].forEach((tag: Element) => {
       if (tag.id === `tag${state.activeKey}`) {
         tag.scrollIntoView && tag.scrollIntoView();
       }
     });
+  } else {
+    showNavgition.value = false;
   }
 };
 
@@ -117,6 +121,10 @@ watch(
     immediate: true
   }
 );
+
+useResizeObserver(tabsRef, () => {
+  updateScorllTab();
+})
 
 const openMenu = (e: MouseEvent, item: RouteItem) => {
   options.value[0].disabled = item.fullPath !== state.activeKey;
@@ -205,74 +213,42 @@ const clickoutside = () => {
 <template>
   <div class="tags-contanier">
     <div class="flex items-center flex-1 h-full overflow-hidden">
-      <span
-        class="flex items-center h-full px-2 border-r cursor-pointer hover:bg-slate-50"
-        @click="scrollPre"
-      >
+      <span v-if="showNavgition" class="flex items-center h-full px-2 border-r cursor-pointer hover:bg-slate-50"
+        @click="scrollPre">
         <n-icon>
           <LeftOutlined />
         </n-icon>
       </span>
       <div ref="tabsRef" class="flex items-center flex-1 h-full tag-scroll">
-        <Draggable
-          v-model="tabsList"
-          ghostClass="ghost"
-          class="flex"
-          animation="250"
-        >
-          <div
-            :id="`tag${item.fullPath}`"
-            class="tag-scroll-item"
-            :class="{ 'active-item': state.activeKey === item.fullPath }"
-            v-for="item in tabsList"
-            :key="item.fullPath"
-            @contextmenu="openMenu($event, item)"
-          >
-            <div
-              class="flex items-center h-full px-2 text-sm"
-              @click="jumpTo(item.fullPath)"
-            >
+        <Draggable v-model="tabsList" ghostClass="ghost" class="flex" animation="250">
+          <div :id="`tag${item.fullPath}`" class="tag-scroll-item"
+            :class="{ 'active-item': state.activeKey === item.fullPath }" v-for="item in tabsList" :key="item.fullPath"
+            @contextmenu="openMenu($event, item)">
+            <div class="flex items-center h-full px-2 text-sm" @click="jumpTo(item.fullPath)">
               {{ item.meta.title }}
             </div>
-            <n-icon
-              v-if="!item.meta.affix"
-              @click="removeTab(item.fullPath)"
-              style="margin-right: 4px"
-            >
+            <n-icon v-if="!item.meta.affix" @click="removeTab(item.fullPath)" style="margin-right: 4px">
               <CloseOutlined />
             </n-icon>
           </div>
         </Draggable>
       </div>
-      <span
-        class="flex items-center h-full px-2 border-l cursor-pointer hover:bg-slate-50"
-        @click="scrollNext"
-      >
+      <span v-if="showNavgition" class="flex items-center h-full px-2 border-l cursor-pointer hover:bg-slate-50"
+        @click="scrollNext">
         <n-icon>
           <RightOutlined />
         </n-icon>
       </span>
     </div>
     <div class="flex items-center justify-center h-full">
-      <span
-        class="flex items-center h-full px-2 border-l cursor-pointer hover:bg-slate-50"
-        @click="reloadPage"
-      >
+      <span class="flex items-center h-full px-2 border-l cursor-pointer hover:bg-slate-50" @click="reloadPage">
         <n-icon>
           <Refresh />
         </n-icon>
       </span>
     </div>
-    <n-dropdown
-      placement="bottom-start"
-      trigger="manual"
-      :show="state.showDropdown"
-      :x="state.x"
-      :y="state.y"
-      :options="options"
-      @select="handleSelect"
-      @clickoutside="clickoutside"
-    />
+    <n-dropdown placement="bottom-start" trigger="manual" :show="state.showDropdown" :x="state.x" :y="state.y"
+      :options="options" @select="handleSelect" @clickoutside="clickoutside" />
   </div>
 </template>
 <style lang="scss" scoped>

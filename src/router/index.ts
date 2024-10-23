@@ -92,7 +92,10 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: constantRouter,
   strict: true,
-  scrollBehavior: () => ({ left: 0, top: 0 })
+  scrollBehavior: (to, from, savedPosition) => ({
+    left: savedPosition?.left ?? 0,
+    top: savedPosition?.top ?? 0
+  })
 });
 
 export default router;
