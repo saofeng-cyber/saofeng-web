@@ -24,7 +24,14 @@ export default defineConfig(({ mode, command }) => {
     server: {
       port: 8088,
       open: true,
-      host: true
+      host: true,
+      proxy: {
+        '/api': {
+          target: 'https://mock.ewsd.cn/mock/6718bee4c1c5785f3c2ad00f',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api/, '')
+        }
+      }
     },
     build: {
       outDir: VITE_OUTPUT_DIR, // 输出目录

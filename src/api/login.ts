@@ -4,7 +4,7 @@ import service from '@/axios/service';
 export function login(params: { username: string; password: string }) {
   const data = { ...params };
   return service.request({
-    url: '/login',
+    url: '/api/login',
     headers: {
       isToken: false
     },
@@ -16,7 +16,7 @@ export function login(params: { username: string; password: string }) {
 // 获取用户详细信息
 export function getInfo() {
   return service.request({
-    url: '/getUserInfo',
+    url: '/api/getUserInfo',
     method: 'get'
   });
 }
