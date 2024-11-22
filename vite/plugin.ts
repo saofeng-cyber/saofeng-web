@@ -9,11 +9,13 @@ import inspector from 'vite-plugin-dev-inspector';
 import { VitePWA } from 'vite-plugin-pwa';
 import { PluginOption } from 'vite';
 import importToCDN from 'vite-plugin-cdn-import';
+import { useMyPlugin } from './my-plugin';
 export const createPlugins = (
   viteEnv: Record<string, any>,
   isBuild = false
 ) => {
   const vitePlugins = [vue(), inspector()] as PluginOption[];
+  vitePlugins.push(useMyPlugin());
   vitePlugins.push(createAutoImport());
   vitePlugins.push(createAutoComponents());
   vitePlugins.push(createSvgIcon());
